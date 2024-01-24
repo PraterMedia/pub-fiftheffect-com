@@ -8,10 +8,28 @@ import {routeHeaders} from '~/data/cache';
 import {ContactHero} from '~/partials/ContactHero';
 import {OurFriends} from '~/partials/Partners';
 
+import splideStyle from '@splidejs/react-splide/css/core';
+
 const CONTACT_HANDLE = 'contact';
 
 export const headers = routeHeaders;
 
+export const links = () => {
+  return [
+    {
+      rel: 'stylesheet',
+      href: splideStyle,
+    },
+    {
+      rel: 'preconnect',
+      href: 'https://assets.calendly.com',
+    },
+    {
+      rel: 'preconnect',
+      href: 'https://calendly.com',
+    },
+  ];
+};
 export const loader = async ({request, context: {storefront}}) => {
   const {page} = await storefront.query(PAGE_QUERY, {
     variables: {
@@ -57,7 +75,7 @@ export default function Contact() {
           </>
         }
       />
-      <OurFriends align="left" />
+      <OurFriends align="left" hideTitleMobile={false} />
     </>
   );
 }

@@ -103,7 +103,11 @@ function OurPartnersSlider() {
     </Splide>
   );
 }
-export function OurFriends({align = 'left', highlighted = false}) {
+export function OurFriends({
+  align = 'left',
+  highlighted = false,
+  hideTitleMobile = true,
+}) {
   return (
     <section className={clsx(highlighted ? 'bg-borders' : '', 'pb-8 md:pb-19')}>
       <div className="container">
@@ -111,7 +115,7 @@ export function OurFriends({align = 'left', highlighted = false}) {
           pretitle="trusted by"
           title="Our Friends"
           align={align}
-          hideTitleMobile={true}
+          hideTitleMobile={hideTitleMobile}
         />
         <div className="-mx-6 border-b border-dark pb-5 lg:mx-0 lg:px-3 lg:pb-8">
           <OurPartnersSlider />
