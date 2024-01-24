@@ -1,156 +1,78 @@
 import {defer} from '@shopify/remix-oxygen';
-import {Await, useLoaderData, Link} from '@remix-run/react';
-import {Suspense} from 'react';
-import {Image, Money} from '@shopify/hydrogen';
+import {AnalyticsPageType} from '@shopify/hydrogen';
+import {seoPayload} from '~/lib/seo.server';
 
-/**
- * @type {MetaFunction}
- */
-export const meta = () => {
-  return [{title: 'Hydrogen | Home'}];
+import {Hero} from '~/components/Hero';
+import {OurFriends} from '~/partials/Partners';
+import {Services} from '~/partials/Services';
+import {Partnership} from '~/partials/Partnership';
+import {BeforeAfter} from '~/partials/BeforeAfter';
+import {Testimonials} from '~/partials/Testimonials';
+import {
+  HomePrimaryOverlay,
+  HomeSecondaryOverlay,
+} from '~/partials/TextOverlays';
+import {WorkWith} from '~/partials/WorkWith';
+
+import splideStyle from '@splidejs/react-splide/css/core';
+
+export const links = () => {
+  return [
+    {
+      rel: 'stylesheet',
+      href: splideStyle,
+    },
+  ];
 };
+export async function loader({params, context}) {
+  const {language, country} = context.storefront.i18n;
 
-/**
- * @param {LoaderFunctionArgs}
- */
-export async function loader({context}) {
-  const {storefront} = context;
-  const {collections} = await storefront.query(FEATURED_COLLECTION_QUERY);
-  const featuredCollection = collections.nodes[0];
-  const recommendedProducts = storefront.query(RECOMMENDED_PRODUCTS_QUERY);
-
-  return defer({featuredCollection, recommendedProducts});
+  if (
+    params.locale &&
+    params.locale.toLowerCase() !== `${language}-${country}`.toLowerCase()
+  ) {
+    // If the locale URL param is defined, yet we still are on `EN-US`
+    // the the locale param must be invalid, send to the 404 page
+    throw new Response(null, {status: 404});
+  }
+  const seo = seoPayload.home();
+  return defer({
+    seo,
+    analytics: {
+      pageType: AnalyticsPageType.home,
+    },
+  });
 }
-
 export default function Homepage() {
-  /** @type {LoaderReturnData} */
-  const data = useLoaderData();
   return (
-    <div className="home">
-      <FeaturedCollection collection={data.featuredCollection} />
-      <RecommendedProducts products={data.recommendedProducts} />
-    </div>
+    <>
+      <Hero
+        highlighted="true"
+        heading={{
+          useH1: 'true',
+          content: "Unlock Your Shopify Store's True Potential",
+        }}
+        description={{
+          content:
+            'Accelerate growth with expert eCommerce optimization. Move swiftly with our dedicated team of Shopify Experts, designers, and strategists.',
+        }}
+        cta={{
+          to: '/contact',
+          content: "Let's Do Better, Together",
+        }}
+        media={{
+          src: '/animations/homeHeroAnimation',
+          type: 'lottie',
+        }}
+      />
+      <OurFriends align="right" highlighted="true" />
+      <Services />
+      <HomePrimaryOverlay />
+      <WorkWith />
+      <Partnership />
+      <BeforeAfter />
+      <Testimonials />
+      <HomeSecondaryOverlay />
+    </>
   );
 }
-
-/**
- * @param {{
- *   collection: FeaturedCollectionFragment;
- * }}
- */
-function FeaturedCollection({collection}) {
-  if (!collection) return null;
-  const image = collection?.image;
-  return (
-    <Link
-      className="featured-collection"
-      to={`/collections/${collection.handle}`}
-    >
-      {image && (
-        <div className="featured-collection-image">
-          <Image data={image} sizes="100vw" />
-        </div>
-      )}
-      <h1>{collection.title}</h1>
-    </Link>
-  );
-}
-
-/**
- * @param {{
- *   products: Promise<RecommendedProductsQuery>;
- * }}
- */
-function RecommendedProducts({products}) {
-  return (
-    <div className="recommended-products">
-      <h2>Recommended Products</h2>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Await resolve={products}>
-          {({products}) => (
-            <div className="recommended-products-grid">
-              {products.nodes.map((product) => (
-                <Link
-                  key={product.id}
-                  className="recommended-product"
-                  to={`/products/${product.handle}`}
-                >
-                  <Image
-                    data={product.images.nodes[0]}
-                    aspectRatio="1/1"
-                    sizes="(min-width: 45em) 20vw, 50vw"
-                  />
-                  <h4>{product.title}</h4>
-                  <small>
-                    <Money data={product.priceRange.minVariantPrice} />
-                  </small>
-                </Link>
-              ))}
-            </div>
-          )}
-        </Await>
-      </Suspense>
-      <br />
-    </div>
-  );
-}
-
-const FEATURED_COLLECTION_QUERY = `#graphql
-  fragment FeaturedCollection on Collection {
-    id
-    title
-    image {
-      id
-      url
-      altText
-      width
-      height
-    }
-    handle
-  }
-  query FeaturedCollection($country: CountryCode, $language: LanguageCode)
-    @inContext(country: $country, language: $language) {
-    collections(first: 1, sortKey: UPDATED_AT, reverse: true) {
-      nodes {
-        ...FeaturedCollection
-      }
-    }
-  }
-`;
-
-const RECOMMENDED_PRODUCTS_QUERY = `#graphql
-  fragment RecommendedProduct on Product {
-    id
-    title
-    handle
-    priceRange {
-      minVariantPrice {
-        amount
-        currencyCode
-      }
-    }
-    images(first: 1) {
-      nodes {
-        id
-        url
-        altText
-        width
-        height
-      }
-    }
-  }
-  query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
-    @inContext(country: $country, language: $language) {
-    products(first: 4, sortKey: UPDATED_AT, reverse: true) {
-      nodes {
-        ...RecommendedProduct
-      }
-    }
-  }
-`;
-
-/** @typedef {import('@shopify/remix-oxygen').LoaderFunctionArgs} LoaderFunctionArgs */
-/** @template T @typedef {import('@remix-run/react').MetaFunction<T>} MetaFunction */
-/** @typedef {import('storefrontapi.generated').FeaturedCollectionFragment} FeaturedCollectionFragment */
-/** @typedef {import('storefrontapi.generated').RecommendedProductsQuery} RecommendedProductsQuery */
-/** @typedef {import('@shopify/remix-oxygen').SerializeFrom<typeof loader>} LoaderReturnData */
