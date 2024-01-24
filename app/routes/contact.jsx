@@ -1,6 +1,6 @@
 import {json} from '@shopify/remix-oxygen';
 import {useLoaderData} from '@remix-run/react';
-// import {AnalyticsPageType} from '@shopify/hydrogen';
+import {AnalyticsPageType} from '@shopify/hydrogen';
 
 import {seoPayload} from '~/lib/seo.server';
 import {routeHeaders} from '~/data/cache';
@@ -26,7 +26,13 @@ export const loader = async ({request, context: {storefront}}) => {
 
   const seo = seoPayload.page({page, url: request.url});
 
-  return json({page, seo});
+  return json({
+    page,
+    seo,
+    analytics: {
+      pageType: AnalyticsPageType.page,
+    },
+  });
 };
 
 export default function Contact() {

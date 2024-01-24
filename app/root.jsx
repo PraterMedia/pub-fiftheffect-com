@@ -18,11 +18,21 @@ import invariant from 'tiny-invariant';
 import {seoPayload} from '~/lib/seo.server';
 
 import styles from './styles/app.css';
-import favicon from '../public/favicon.svg';
 import {Layout} from './components/Layout';
 
 import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
-//import {useAnalytics} from './hooks/useAnalytics';
+import {useAnalytics} from './hooks/useAnalytics';
+
+import fiAppleTouch from '../public/icons/apple-touch-icon.png';
+import fi32 from '../public/icons/favicon-32x32.png';
+import fi16 from '../public/icons/favicon-16x16.png';
+import fiMask from '../public/icons/safari-pinned-tab.svg';
+import favicon from '../public/icons/favicon.ico';
+
+import HelveticaBold from './styles/fonts/HelveticaNeueLTPro-bold.woff';
+import HelveticaMedium from './styles/fonts/HelveticaNeueLTPro-medium.woff';
+import HelveticaLight from './styles/fonts/HelveticaNeueLTPro-light.woff';
+import Helvetica from './styles/fonts/HelveticaNeueLTPro.woff';
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -53,10 +63,42 @@ export function links() {
       rel: 'preconnect',
       href: 'https://shop.app',
     },
-    {rel: 'icon', type: 'image/svg+xml', href: favicon},
+    {
+      rel: 'preload',
+      type: 'font/woff',
+      as: 'font',
+      crossOrigin: 'anonymous',
+      href: Helvetica,
+    },
+    {
+      rel: 'preload',
+      type: 'font/woff',
+      as: 'font',
+      crossOrigin: 'anonymous',
+      href: HelveticaLight,
+    },
+    {
+      rel: 'preload',
+      type: 'font/woff',
+      as: 'font',
+      crossOrigin: 'anonymous',
+      href: HelveticaMedium,
+    },
+    {
+      rel: 'preload',
+      type: 'font/woff',
+      as: 'font',
+      crossOrigin: 'anonymous',
+      href: HelveticaBold,
+    },
+    {rel: 'apple-touch-icon', sizes: '180x180', href: fiAppleTouch},
+    {rel: 'icon', sizes: '32x32', type: 'image/png', href: fi32},
+    {rel: 'icon', sizes: '16x16', type: 'image/png', href: fi16},
+    {rel: 'manifest', href: '/icons/manifest.json'},
+    {rel: 'mask-icon', href: fiMask, color: '#5bbad5'},
+    {rel: 'shortcut icon', href: favicon},
   ];
 }
-
 /**
  * @return {LoaderReturnData}
  */
@@ -88,13 +130,16 @@ export default function App() {
   /** @type {LoaderReturnData} */
   const data = useLoaderData();
   const locale = DEFAULT_LOCALE;
-  //const hasUserConsent = true;
-  //useAnalytics(hasUserConsent, locale);
+  const hasUserConsent = true;
+  useAnalytics(hasUserConsent, locale);
   return (
     <html lang={locale.language}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="msapplication-TileColor" content="#da532c" />
+        <meta name="msapplication-config" content="/icons/browserconfig.xml" />
+        <meta name="theme-color" content="#ffffff" />
         <Seo />
         <Meta />
         <Links />
