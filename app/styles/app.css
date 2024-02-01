@@ -99,24 +99,21 @@ summary::-webkit-details-marker {
 .prose > *{
 	@apply md:px-8
 }
-#main-form {
+#main-form, .form-components-style_formz-form-error--big__y-vA2:empty, .fields-global_form-form-row__DKNAN {
     padding: 0!important
 }
 .form-components-style_single-step-content__modern__buV1h{
-    margin-top: 0
+    margin-top: 0!important
 }
 .form-checkbox-input .formz-checkbox-wrapper {
-    gap: 4px
+    gap: 4px!important
 }
 .form-checkbox-input .formz-checkbox-wrapper > *{
-    margin: 0;
-    flex: 1
+    margin: 0!important;
+    flex: 1!important
 }
 #formz-wrapper .form-theme-button{
     width: 100%!important
-}
-.form-components-style_formz-form-error--big__y-vA2:empty, .fields-global_form-form-row__DKNAN{
-    padding: 0
 }
 .form-checkbox-input .formz-checkbox-wrapper{
     padding: 5px 0 0!important
