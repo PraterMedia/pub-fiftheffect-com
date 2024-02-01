@@ -63,7 +63,7 @@ export function OurCapabilities() {
                     <h3 className="mb-5 text-xl font-medium leading-tight md:mb-4 md:text-2xl">
                       {item.title}
                     </h3>
-                    <p className="font-light">{item.text}</p>
+                    <p>{item.text}</p>
                   </div>
                 </SplideSlide>
               ))}

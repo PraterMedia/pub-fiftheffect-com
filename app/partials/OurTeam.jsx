@@ -32,12 +32,12 @@ export function OurTeam() {
               title="Our Team"
               description={
                 <>
-                  <span className="mb-4 mt-6 block text-base font-light leading-snug tracking-wide md:text-lg">
+                  <span className="mb-4 mt-6 block text-base leading-snug md:text-lg">
                     Seven+ people, five nations, and one common purpose. We
                     share a lifelong curiosity that's satisfied by the work we
                     do for others.
                   </span>
-                  <span className="block text-base font-light leading-snug tracking-wide md:text-lg">
+                  <span className="block text-base leading-snug md:text-lg">
                     We're real people. Names, interests, all that stuff!
                   </span>
                 </>
@@ -58,10 +58,10 @@ export function OurTeam() {
                   className="h-auto w-full"
                 />
                 <div className="pt-5">
-                  <span className="block text-base font-light leading-snug tracking-wide">
+                  <span className="block text-base leading-snug">
                     {teamMember.role}
                   </span>
-                  <span className="block text-lg font-medium leading-snug tracking-wide">
+                  <span className="block text-lg font-medium leading-snug">
                     {teamMember.name}
                   </span>
                 </div>

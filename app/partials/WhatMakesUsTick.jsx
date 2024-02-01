@@ -17,13 +17,13 @@ export function WhatMakesUsTick() {
               title="What Makes Us Tick?"
               description={
                 <>
-                  <span className="mb-4 mt-6 block text-base font-light leading-snug tracking-wide md:text-lg">
+                  <span className="mb-4 mt-6 block text-base leading-snug md:text-lg">
                     The idea that customer experience can always be improved.
                     With Shopify, there's never a finish line, the playing field
                     is always expanding, and customer expectations are always
                     reaching new heights.
                   </span>
-                  <span className="block text-base font-light leading-snug tracking-wide md:text-lg">
+                  <span className="block text-base leading-snug md:text-lg">
                     We're thrilled by the challenge of staying two steps ahead
                     of trends and customers' expectations, showing everyone what
                     unparalleled CX can be.

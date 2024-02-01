@@ -81,7 +81,7 @@ export function Services() {
                     }}
                     exit={{opacity: 0, height: 0}}
                     transition={{duration: 0.2}}
-                    className="font-light lg:text-lg"
+                    className="lg:text-lg"
                   >
                     <p className="pb-4">{service.description}</p>
                   </motion.div>

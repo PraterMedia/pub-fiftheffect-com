@@ -58,7 +58,7 @@ export function Testimonials() {
                       src={starsImg}
                       alt="5 stars"
                     />
-                    <p className="mb-4 tracking-wide lg:text-lg">{item.text}</p>
+                    <p className="mb-4">{item.text}</p>
                     <div className="flex flex-col-reverse justify-between gap-2 md:flex-row md:items-center">
                       <img
                         className="block h-10 w-28 object-contain object-left"

@@ -108,7 +108,7 @@ export function FamiliarThings() {
                 />
                 <div>
                   <h3
-                    className="mb-1 text-xl font-normal transition-all duration-500 md:mb-5 lg:text-2xl"
+                    className="mb-1 text-xl transition-all duration-500 md:mb-5 lg:text-2xl"
                     style={{
                       opacity: isInView ? '1' : '0',
                       transform: isInView
@@ -120,7 +120,7 @@ export function FamiliarThings() {
                     {feature.title}
                   </h3>
                   <p
-                    className="text-base font-light leading-normal tracking-wide transition-all duration-500 md:text-lg"
+                    className="text-base leading-normal transition-all duration-500 md:text-lg"
                     style={{
                       opacity: isInView ? '1' : '0',
                       transform: isInView

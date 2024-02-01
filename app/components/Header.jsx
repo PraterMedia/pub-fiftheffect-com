@@ -32,7 +32,7 @@ export function Header({menu, title, logo, isHome}) {
         <nav
           className={clsx(
             isOpen ? 'block' : 'hidden',
-            'absolute right-0 top-0 w-1/2 bg-white pt-[88px] tracking-normal shadow-header md:static md:block md:w-auto md:bg-transparent md:pt-0 md:shadow-none',
+            'absolute right-0 top-0 w-1/2 bg-white pt-[88px] shadow-header md:static md:block md:w-auto md:bg-transparent md:pt-0 md:shadow-none',
           )}
           id="navbar-header"
         >

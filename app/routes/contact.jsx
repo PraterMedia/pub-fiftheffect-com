@@ -1,6 +1,6 @@
 import {json} from '@shopify/remix-oxygen';
 import {useLoaderData} from '@remix-run/react';
-import {AnalyticsPageType} from '@shopify/hydrogen';
+import {AnalyticsPageType, Script} from '@shopify/hydrogen';
 
 import {seoPayload} from '~/lib/seo.server';
 import {routeHeaders} from '~/data/cache';
@@ -27,6 +27,10 @@ export const links = () => {
     {
       rel: 'preconnect',
       href: 'https://calendly.com',
+    },
+    {
+      rel: 'preconnect',
+      href: 'https://formaloo.me',
     },
   ];
 };
@@ -76,6 +80,7 @@ export default function Contact() {
         }
       />
       <OurFriends align="left" hideTitleMobile={false} />
+      {/* <Script src="https://formaloo.me/istatic/js/main.js" /> */}
     </>
   );
 }

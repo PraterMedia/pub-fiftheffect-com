@@ -81,10 +81,10 @@ function Strategy({
         className="float-left mr-3 h-7 w-7 object-contain md:mr-0 md:flex-none"
       />
       <div>
-        <h3 className="mb-7 text-xl font-normal leading-tight md:mb-4 md:text-2xl">
+        <h3 className="mb-7 text-xl leading-tight md:mb-4 md:text-2xl">
           {title}
         </h3>
-        <p className="font-light leading-snug md:text-lg">{description}</p>
+        <p className="leading-snug md:text-lg">{description}</p>
       </div>
 
       {leftLine && (

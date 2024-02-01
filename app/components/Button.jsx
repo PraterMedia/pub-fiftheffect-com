@@ -23,11 +23,9 @@ export const Button = forwardRef(
     const variants = {
       primary: `${baseButtonClasses} rounded border border-solid px-8 py-4 bg-secondary-accent border-secondary-accent text-dark hover:bg-white hover:text-secondary-accent`,
       secondary: `${baseButtonClasses} rounded border border-solid px-8 py-4 border-secondary-accent bg-white text-secondary-accent hover:bg-secondary-accent hover:text-white`,
-      inline:
-        'p-0 text-dark hover:text-primary-accent font-bold tracking-normal',
-      inlineWhite: 'p-0 text-white hover:text-dark font-bold tracking-normal',
-      inlineAccent:
-        'p-0 text-primary-accent hover:text-dark font-bold tracking-normal',
+      inline: 'p-0 text-dark hover:text-primary-accent font-bold',
+      inlineWhite: 'p-0 text-white hover:text-dark font-bold',
+      inlineAccent: 'p-0 text-primary-accent hover:text-dark font-bold',
     };
 
     const widths = {

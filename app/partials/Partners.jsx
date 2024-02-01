@@ -4,57 +4,78 @@ import {AutoScroll} from '@splidejs/splide-extension-auto-scroll';
 
 import {SectionHeader} from '~/components/SectionHeader';
 
-import partnersShopify from '../../public/images/partners-shopify.png';
-import partnersSearchanise from '../../public/images/partners-searchanise.svg';
-import partnersAccessible from '../../public/images/partners-accessible.png';
-import partnersBold from '../../public/images/partners-bold.png';
-import partnersRecharge from '../../public/images/partners-recharge.png';
-import partnersYopto from '../../public/images/yotpo-logo.svg';
-import partnersGorgias from '../../public/images/partners-gorgias.png';
+import partnersShopify from '../../public/images/partner-shopify.svg';
+import partnersIntelligems from '../../public/images/partner-intelligems.svg';
+import partnersHeatmap from '../../public/images/partner-heatmap.svg';
+import partnersHotjar from '../../public/images/partner-hotjar.svg';
+import partnersLoop from '../../public/images/partner-loop.svg';
+import partnersAftersell from '../../public/images/partner-aftersell.svg';
+import partnersAccessibe from '../../public/images/partner-accessibe.png';
+import partnersBold from '../../public/images/partner-bold.svg';
+import partnersRecharge from '../../public/images/partner-recharge.png';
+import partnersGorgias from '../../public/images/partner-gorgias.png';
 
 function OurPartnersSlider() {
   const images = [
     {
       src: partnersShopify,
-      width: 275,
-      height: 47,
+      width: 173,
+      height: 29,
       alt: 'Our Partners - Shopify',
     },
     {
-      src: partnersSearchanise,
-      width: 275,
-      height: 38,
-      alt: 'Trusted by Searchanise',
+      src: partnersIntelligems,
+      width: 157,
+      height: 29,
+      alt: 'Our Partners - Intelligems',
     },
     {
-      src: partnersAccessible,
-      width: 275,
-      height: 54,
-      alt: 'Our Partners - accessible',
+      src: partnersHeatmap,
+      width: 156,
+      height: 31,
+      alt: 'Our Partners - Heatmap',
+    },
+    {
+      src: partnersHotjar,
+      width: 95,
+      height: 25,
+      alt: 'Our Partners - Hotjar',
+    },
+    {
+      src: partnersLoop,
+      width: 70,
+      height: 21,
+      alt: 'Our Partners - Loop',
+    },
+    {
+      src: partnersAftersell,
+      width: 143,
+      height: 23,
+      alt: 'Our Partners - AfterSell',
+    },
+    {
+      src: partnersAccessibe,
+      width: 157,
+      height: 31,
+      alt: 'Our Partners - accessiBe',
     },
     {
       src: partnersBold,
-      width: 275,
-      height: 84,
-      alt: 'Our Partners - bold',
+      width: 109,
+      height: 37,
+      alt: 'Our Partners - Bold',
     },
     {
       src: partnersRecharge,
-      width: 275,
-      height: 70,
+      width: 114,
+      height: 33,
       alt: 'Our Partners - Recharge',
     },
     {
-      src: partnersYopto,
-      width: 275,
-      height: 98,
-      alt: 'Our Partners - Yopto',
-    },
-    {
       src: partnersGorgias,
-      width: 275,
-      height: 64,
-      alt: 'Our Partners - gorgias',
+      width: 133,
+      height: 35,
+      alt: 'Our Partners - Gorgias',
     },
   ];
 

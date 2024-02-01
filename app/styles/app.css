@@ -12,14 +12,13 @@
 	--clr-secondary-accent : #FDC52F;
 	--clr-tertiary-accent : #f7dc7d;
 	--clr-borders : #FCFAF8;
-	--clr-borders : #f2f5f8;
 	--clr-gray : #636363;
 	--clr-light-gray : #A3A3A3;
 	--clr-dark-gray : #383838;
 	--clr-dark-blue : #1d2433;
 }
 body{
-	@apply text-dark-blue bg-white leading-snug font-body;
+	@apply text-dark-blue bg-white leading-snug font-body font-normal;
 	/* letter-spacing: 1px */
 }
 a{
@@ -29,10 +28,10 @@ a:hover{
 	@apply text-primary-accent;
 }
 h1, h2, h3, h4, h5, h6{
-	@apply tracking-wide text-dark font-heading;
+	@apply text-dark font-heading;
 }
 h3{
-	@apply text-lg font-bold;
+	@apply text-lg font-medium;
 }
 @media screen and (min-width: 1024px) {
 	h3{
@@ -41,7 +40,7 @@ h3{
 }
 .splide.our-friends__splide.is-initialized:not(.is-active) .splide__list,
 .splide.our-capabilities__splide.is-initialized:not(.is-active) .splide__list{
-	@apply lg:flex lg:items-center lg:justify-around lg:gap-x-10 lg:gap-y-9
+	@apply lg:flex lg:items-center lg:justify-around lg:gap-x-6 lg:gap-y-9
 }
 .splide.our-friends__splide.is-initialized:not(.is-active) .splide__list .splide__slide,
 .splide.our-capabilities__splide.is-initialized:not(.is-active) .splide__list .splide__slide{
@@ -71,10 +70,10 @@ summary::-webkit-details-marker {
 	--tw-prose-body: var(--clr-dark-blue);
 	--tw-prose-headings: var(--clr-dark-blue);
 	--tw-prose-bullets: var(--clr-dark);
-	@apply max-w-none font-light leading-snug
+	@apply max-w-none leading-snug
 }
 .prose :where(h1, h2, h3, h4, h5, h6):not(:where([class~="not-prose"], [class~="not-prose"] *)){
-	@apply font-normal tracking-normal leading-solid
+	@apply font-normal leading-solid
 }
 .prose :where(h1, h2):not(:where([class~="not-prose"], [class~="not-prose"] *)){
 	@apply border-b border-solid border-light-gray pb-1
@@ -99,6 +98,28 @@ summary::-webkit-details-marker {
 }
 .prose > *{
 	@apply md:px-8
+}
+#main-form {
+    padding: 0!important
+}
+.form-components-style_single-step-content__modern__buV1h{
+    margin-top: 0
+}
+.form-checkbox-input .formz-checkbox-wrapper {
+    gap: 4px
+}
+.form-checkbox-input .formz-checkbox-wrapper > *{
+    margin: 0;
+    flex: 1
+}
+#formz-wrapper .form-theme-button{
+    width: 100%!important
+}
+.form-components-style_formz-form-error--big__y-vA2:empty, .fields-global_form-form-row__DKNAN{
+    padding: 0
+}
+.form-checkbox-input .formz-checkbox-wrapper{
+    padding: 5px 0 0!important
 }
 @font-face {
 	font-family: 'Helveticaneueltpro';

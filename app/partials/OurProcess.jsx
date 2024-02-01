@@ -37,7 +37,7 @@ export function OurProcess() {
     <section className="py-19">
       <div className="container">
         <SectionHeader pretitle="What Drives US" title="Our Process" />
-        <div className="max-w-[630px] space-y-3 font-light tracking-wider md:space-y-7 md:text-xl">
+        <div className="max-w-[630px] space-y-3 md:space-y-7 md:text-xl">
           <p>
             We are a tight-knit, laser-focused unit with one purpose, helping
             our clients connect with customers and achieve their goals.
@@ -54,7 +54,7 @@ export function OurProcess() {
               <Fragment key={index}>
                 <div
                   className={clsx(
-                    'relative z-10 flex aspect-square w-full max-w-none flex-shrink flex-grow-0 basis-auto items-center justify-center rounded-full border border-solid bg-white text-[5vw] font-light sm:col-start-auto sm:col-end-auto sm:row-start-auto sm:row-end-auto sm:w-[13vw] sm:max-w-[148px] sm:text-[3vw] md:text-[19px] lg:text-2xl',
+                    'relative z-10 flex aspect-square w-full max-w-none flex-shrink flex-grow-0 basis-auto items-center justify-center rounded-full border border-solid bg-white text-[5vw] sm:col-start-auto sm:col-end-auto sm:row-start-auto sm:row-end-auto sm:w-[13vw] sm:max-w-[148px] sm:text-[3vw] md:text-[19px] lg:text-2xl',
                     index === 2 &&
                       'col-start-3 col-end-4 row-start-3 row-end-4',
                     index === 3 &&
@@ -97,7 +97,7 @@ export function OurProcess() {
           </div>
           <div className="mx-auto mt-4 hidden max-w-[86%] sm:block">
             <IconProcessRepeat className="h-auto w-full" />
-            <div className="absolute bottom-0 left-0 right-0 mb-1 text-center text-[2.7vw] font-light md:mb-4 md:text-lg">
+            <div className="absolute bottom-0 left-0 right-0 mb-1 text-center text-[2.7vw] md:mb-4 md:text-lg">
               Repeat
             </div>
           </div>

@@ -15,9 +15,17 @@ export default async function handleRequest(
   responseHeaders,
   remixContext,
 ) {
-  const {nonce, header, NonceProvider} = createContentSecurityPolicy({
+  let {nonce, header, NonceProvider} = createContentSecurityPolicy({
     frameSrc: ['https://calendly.com'],
   });
+  header = header.replaceAll(
+    'https://cdn.shopify.com',
+    'https://cdn.shopify.com https://fonts.gstatic.com https://fonts.googleapis.com https://formaloo.me',
+  );
+  header = header.replaceAll(
+    'https://monorail-edge.shopifysvc.com',
+    'https://monorail-edge.shopifysvc.com https://api.formaloo.me',
+  );
   const body = await renderToReadableStream(
     <NonceProvider>
       <RemixServer context={remixContext} url={request.url} />

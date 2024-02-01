@@ -20,7 +20,7 @@ export function Hero({highlighted, heading, description, cta, media}) {
             <Heading
               className={clsx(
                 media ? 'max-w-[17ch]' : '',
-                'mb-5 text-5xl leading-solid tracking-wide md:mb-8 md:text-6xl lg:mb-12 lg:text-7xl',
+                'mb-5 text-5xl leading-solid md:mb-8 md:text-6xl lg:mb-12 lg:text-7xl',
               )}
             >
               {heading.content}
@@ -30,7 +30,7 @@ export function Hero({highlighted, heading, description, cta, media}) {
             <div
               className={clsx(
                 media ? 'max-w-[37ch]' : '',
-                'text-xl font-light tracking-wide md:text-1/2xl',
+                'text-xl md:text-2xl',
               )}
               dangerouslySetInnerHTML={{__html: description.content}}
             ></div>

@@ -45,7 +45,7 @@ export function HomeSecondaryOverlay() {
   return (
     <section className="bg-primary-accent">
       <div className="container relative overflow-hidden pb-24 pt-19">
-        <h2 className="mb-1 text-3xl font-medium leading-tight tracking-wide text-white md:text-6xl">
+        <h2 className="mb-1 text-3xl font-medium leading-tight text-white md:text-6xl">
           Ready to Work With Us?
         </h2>
         <p className="tracking-wide text-white md:text-lg">
@@ -94,7 +94,7 @@ export function CapabilitiesOverlay() {
   return (
     <section className="relative bg-primary-accent">
       <div className="container relative overflow-hidden pb-24 pt-19">
-        <h2 className="mb-1 text-3xl font-medium leading-tight tracking-wide text-white md:text-6xl">
+        <h2 className="mb-1 text-3xl font-medium leading-tight text-white md:text-6xl">
           Got questions?
         </h2>
         <p className="tracking-wide text-white md:text-lg">
@@ -132,7 +132,7 @@ export function WorkOverlay() {
     <section className="relative bg-dark">
       <div className="container relative overflow-hidden pb-20 pt-20">
         <div className="relative pl-10">
-          <h2 className="mb-1 text-3xl font-medium leading-tight tracking-wide text-white md:text-6xl">
+          <h2 className="mb-1 text-3xl font-medium leading-tight text-white md:text-6xl">
             Interested?
           </h2>
           <p className="tracking-wide text-white md:text-lg">
@@ -162,7 +162,7 @@ export function AboutOverlay() {
   return (
     <section className="relative bg-tertiary-accent">
       <div className="container relative z-10 overflow-hidden pb-24 pt-19">
-        <h2 className="mb-1 text-3xl font-medium leading-tight tracking-wide md:text-6xl">
+        <h2 className="mb-1 text-3xl font-medium leading-tight md:text-6xl">
           Give your users a gift
         </h2>
         <p className="tracking-wide md:text-lg">

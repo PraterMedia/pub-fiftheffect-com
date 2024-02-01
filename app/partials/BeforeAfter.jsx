@@ -51,7 +51,7 @@ export function BeforeAfter() {
 
             <div className="flex justify-between md:block lg:pl-24">
               {/* Desktop text */}
-              <div className="hidden space-y-6 text-justify tracking-wide md:block">
+              <div className="hidden space-y-6 text-justify md:block">
                 <p>
                   Compression Sale reached out to us after experiencing a
                   misfire while migrating to Shopify. After we launched their
@@ -79,7 +79,7 @@ export function BeforeAfter() {
                 />
               </div>
               {/* Counter details */}
-              <div className="mt-3 max-w-[185px] font-light text-dark md:max-w-none md:text-center lg:max-w-[185px] lg:text-start lg:text-xl">
+              <div className="mt-3 max-w-[185px] text-dark md:max-w-none md:text-center lg:max-w-[185px] lg:text-start lg:text-xl">
                 1-year Conversion Rate Improvement
               </div>
             </div>
@@ -88,7 +88,7 @@ export function BeforeAfter() {
           <div className="mt-8 flex justify-center lg:mt-0 lg:w-2/5 lg:items-center">
             {/* Before */}
             <div className="flex-1 lg:flex-auto">
-              <h3 className="mb-4 text-center text-xs font-normal lg:text-start lg:text-xl">
+              <h3 className="mb-4 text-center text-xs lg:text-start lg:text-xl">
                 Before
               </h3>
               <div className="shadow-lg">
@@ -108,7 +108,7 @@ export function BeforeAfter() {
             </div>
             {/* After */}
             <div className="flex-1 lg:-ml-5 lg:flex-auto">
-              <h3 className="mb-4 text-center text-xs font-normal lg:text-start lg:text-xl">
+              <h3 className="mb-4 text-center text-xs lg:text-start lg:text-xl">
                 After
               </h3>
               <div className="shadow-lg">
@@ -145,7 +145,7 @@ export function BeforeAfter() {
                   </span>
                 </span>
               </summary>
-              <div className="mt-5 space-y-4 text-justify tracking-wide">
+              <div className="mt-5 space-y-4 text-justify">
                 <p>
                   Compression Sale reached out to us after experiencing a
                   misfire while migrating to Shopify. After we launched their

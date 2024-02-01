@@ -12,11 +12,11 @@ export function AtTheHeart() {
             </h2>
           </div>
           <div className="relative md:w-[550px] lg:w-[600px]">
-            <h3 className="mb-10 text-xl font-normal leading-tight tracking-wide md:mb-4 md:text-2xl lg:mb-6 lg:text-4xl">
+            <h3 className="mb-10 text-xl leading-tight md:mb-4 md:text-2xl lg:mb-6 lg:text-4xl">
               We feel extremely fortunate to be involved with the work we do
               everyday.
             </h3>
-            <div className="text-base font-light tracking-wide lg:text-xl">
+            <div className="text-base lg:text-xl">
               <p className="mb-7">
                 We are a tight-knit, laser-focused unit with one purpose,
                 helping our clients connect with customers and achieve their

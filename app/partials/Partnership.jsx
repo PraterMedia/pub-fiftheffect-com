@@ -48,7 +48,7 @@ export function Partnership() {
   return (
     <div className="bg-borders py-19">
       <div className="container">
-        <div className="mb-5 text-3xl font-light lg:hidden">
+        <div className="mb-5 text-3xl lg:hidden">
           <p>What Partnership means to us</p>
         </div>
         <Splide
@@ -103,10 +103,8 @@ export function Partnership() {
                   loading="lazy"
                   className="mb-5 h-10 w-10 object-contain"
                 />
-                <h3 className="mb-5 text-2xl font-normal">{feature.title}</h3>
-                <p className="text-lg font-light leading-normal tracking-wide">
-                  {feature.description}
-                </p>
+                <h3 className="mb-5 text-2xl">{feature.title}</h3>
+                <p className="leading-normal">{feature.description}</p>
               </SplideSlide>
             ))}
           </SplideTrack>

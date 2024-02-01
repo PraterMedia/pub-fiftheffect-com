@@ -14,9 +14,9 @@ import IconPassionate from '../../public/images/Icon---Passionate-People.svg';
 function getPartners() {
   return [
     {
-      icon: IconAgencies,
-      title: 'Marketing Agencies',
-      description: 'blending branding and development',
+      icon: IconBrands,
+      title: 'Established Brands',
+      description: 'creating new growth through improved customer experience',
     },
     {
       icon: IconInHouse,
@@ -24,14 +24,14 @@ function getPartners() {
       description: "expediting their project's completion",
     },
     {
-      icon: IconYoung,
-      title: 'Young Companies',
-      description: 'scaling up and building out',
+      icon: IconPassionate,
+      title: 'Passionate People',
+      description: 'looking to collaborate with those who share their vision',
     },
     {
-      icon: IconBrands,
-      title: 'Established Brands',
-      description: 'creating new growth through improved customer experience',
+      icon: IconAgencies,
+      title: 'Marketing Agencies',
+      description: 'blending branding and development',
     },
     {
       icon: IconEntrepreneurs,
@@ -39,9 +39,9 @@ function getPartners() {
       description: 'looking for a competitive edge',
     },
     {
-      icon: IconPassionate,
-      title: 'Passionate People',
-      description: 'looking to collaborate with those who share their vision',
+      icon: IconYoung,
+      title: 'Young Companies',
+      description: 'scaling up and building out',
     },
   ];
 }
@@ -58,7 +58,7 @@ export function WorkWith() {
           align="right"
         />
         <div className="mt-1 lg:flex">
-          <div className="w-full font-light leading-tight md:text-lg lg:max-w-[43%] lg:text-xl">
+          <div className="w-full leading-tight md:text-lg lg:max-w-[43%] lg:text-xl">
             <p>From all industries and stages of growth</p>
             <div
               ref={animatedLinesRef}
@@ -97,10 +97,10 @@ export function WorkWith() {
                   className="mb-2 h-10 w-10 shrink-0 object-contain"
                 />
                 <div className="flex-1">
-                  <h3 className="mb-1 text-xl font-normal leading-tight lg:text-2xl">
+                  <h3 className="mb-1 text-xl leading-tight lg:text-2xl">
                     {partner.title}
                   </h3>
-                  <p className="font-light md:text-lg">{partner.description}</p>
+                  <p className="md:text-lg">{partner.description}</p>
                 </div>
               </div>
             ))}

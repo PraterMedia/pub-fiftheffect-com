@@ -58,7 +58,7 @@ export function OurValues() {
               title="Our Values"
               description={
                 <>
-                  <span className="mt-6 block text-base font-light leading-snug tracking-wide md:text-lg">
+                  <span className="mt-6 block text-base leading-snug md:text-lg">
                     Beyond what a company does, it's important to know who they
                     are. These are the values that guide us.
                   </span>
@@ -113,10 +113,10 @@ export function OurValues() {
                   width={40}
                   height={40}
                 />
-                <h3 className="mb-4 text-xl font-normal leading-tight lg:text-2xl">
+                <h3 className="mb-4 text-xl leading-tight lg:text-2xl">
                   {value.title}
                 </h3>
-                <p className="font-light tracking-wide">{value.description}</p>
+                <p>{value.description}</p>
               </div>
             ))}
           </div>

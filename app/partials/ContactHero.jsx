@@ -1,17 +1,35 @@
 import clsx from 'clsx';
-import {useState, useRef} from 'react';
+import {useState, useRef, useEffect} from 'react';
 import {InlineWidget} from 'react-calendly';
 
+const Formaloo = () => {
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://formaloo.me/istatic/js/main.js';
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+  return (
+    <div
+      id="formz-wrapper"
+      data-formz-slug="43xqsH5a"
+      data-formz-type="simple"
+    />
+  );
+};
 const contactTabs = [
   {
     label: 'Schedule A Call',
     content: (
-      <InlineWidget url="https://calendly.com/fiftheffect/potential-partnerships?hide_event_type_details=1&hide_gdpr_banner=1&text_color=121212&primary_color=3693ff" />
+      <InlineWidget url="https://calendly.com/fiftheffect/potential-partnerships-onsite?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=3693ff" />
     ),
   },
   {
     label: 'Send a Message',
-    content: 'Send a Message',
+    content: <Formaloo />,
   },
 ];
 export function ContactHero({
@@ -53,18 +71,18 @@ export function ContactHero({
   return (
     <section className="py-8 md:py-14">
       <div
-        className="container flex flex-col items-center justify-between gap-x-8 md:flex-row"
+        className="container flex flex-col justify-between gap-x-8 md:flex-row"
         aria-orientation="horizontal"
       >
         <div className="w-full md:w-1/2 lg:w-3/5">
           {heading && (
-            <h1 className="mb-5 max-w-[18ch] text-5xl leading-solid tracking-wide md:text-6xl lg:text-7xl">
+            <h1 className="mb-5 max-w-[18ch] text-5xl leading-solid md:text-6xl lg:text-7xl">
               {heading}
             </h1>
           )}
           {description && (
             <div
-              className="max-w-[40ch] text-xl font-light tracking-wide md:text-1/2xl"
+              className="max-w-[40ch] text-xl md:text-2xl"
               dangerouslySetInnerHTML={{__html: description}}
             ></div>
           )}
@@ -110,7 +128,7 @@ export function ContactHero({
               id={`panel-id-${index}`}
               tabIndex={0}
             >
-              <h2 className="text-3xl"> {tab.content}</h2>
+              {tab.content}
             </div>
           ))}
         </div>
@@ -133,12 +151,12 @@ const ContactSecondaryContent = ({
   return (
     <div className={className}>
       {secondaryHeading && (
-        <h3 className="mb-7 text-3xl font-bold leading-tight tracking-wide md:mb-3 md:text-2xl">
+        <h3 className="mb-7 text-3xl font-bold leading-tight md:mb-3 md:text-2xl">
           {secondaryHeading}
         </h3>
       )}
       {secondaryDescription && (
-        <div className="space-y-4 text-base font-light leading-normal tracking-wide md:space-y-5 md:text-xl">
+        <div className="space-y-4 text-base leading-normal md:space-y-5 md:text-xl">
           {secondaryDescription}
         </div>
       )}

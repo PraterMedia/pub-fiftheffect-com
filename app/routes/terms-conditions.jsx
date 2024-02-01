@@ -37,7 +37,7 @@ export default function TermsConditions() {
   return (
     <article className="py-8 md:py-14">
       <div className="container max-w-[996px]">
-        <h1 className="mb-4 border-b border-solid border-light-gray pb-1 text-5xl leading-solid tracking-wide md:mb-10 md:text-7xl">
+        <h1 className="mb-4 border-b border-solid border-light-gray pb-1 text-5xl leading-solid md:mb-10 md:text-7xl">
           {page.title}
         </h1>
         <div

@@ -16,7 +16,7 @@ export function SectionHeader({
   return (
     <div className={clsx(className, textAlignment)}>
       {pretitle && (
-        <div className="mb-1 text-sm font-light uppercase leading-relaxed tracking-wide text-gray">
+        <div className="text-sm font-light uppercase leading-relaxed text-gray">
           {pretitle}
         </div>
       )}
@@ -34,9 +34,7 @@ export function SectionHeader({
       {description && (
         <p
           className={
-            descriptionStyle == 'lg'
-              ? 'mt-4 text-lg font-light tracking-wide md:text-xl'
-              : 'text-lg'
+            descriptionStyle == 'lg' ? 'mt-4 text-lg md:text-xl' : 'text-lg'
           }
         >
           {description}

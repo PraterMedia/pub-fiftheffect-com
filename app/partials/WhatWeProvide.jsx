@@ -74,12 +74,12 @@ export function WhatWeProvide() {
                   src={item.icon}
                   alt={item.title}
                 />
-                <h3 className="text-xl font-normal leading-tight lg:text-2xl">
+                <h3 className="text-xl leading-tight lg:text-2xl">
                   {item.title}
                 </h3>
               </div>
-              <p className="font-light md:text-lg">{item.text}</p>
-              <ul className="mt-8 list-none font-light md:mt-10 md:text-lg">
+              <p className="md:text-lg">{item.text}</p>
+              <ul className="mt-8 list-none md:mt-10 md:text-lg">
                 {item.list.map((listItem, index) => (
                   <li
                     key={index}
