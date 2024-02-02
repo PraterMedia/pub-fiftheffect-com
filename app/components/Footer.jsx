@@ -5,13 +5,15 @@ import {
   IconInstagram,
   IconLinkedin,
 } from './Icon';
+
+import hydrogenLogo from '../../public/images/shopify-hydrogen.svg';
 export function Footer({primaryMenu, secondaryMenu, title, logo}) {
   return (
     <footer className="bg-borders py-14">
-      <div className="container grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-rows-1 gap-y-8 gap-x-5">
+      <div className="container grid grid-cols-2 grid-rows-1 gap-x-5 gap-y-8 md:grid-cols-3 lg:grid-cols-4">
         <div className="col-span-full lg:col-auto">
           <Link
-            className="text-dark text-2xl uppercase leading-none inline-block"
+            className="inline-block text-2xl uppercase leading-none text-dark"
             to="/"
             prefetch="intent"
           >
@@ -19,9 +21,10 @@ export function Footer({primaryMenu, secondaryMenu, title, logo}) {
               <img
                 src={logo}
                 alt={title}
-                className="md:w-[162px] w-[134px]"
+                className="w-[134px] md:w-[162px]"
                 width={187}
                 height={47}
+                loading="lazy"
               />
             ) : (
               title
@@ -37,23 +40,23 @@ export function Footer({primaryMenu, secondaryMenu, title, logo}) {
           <Link
             to="/contact"
             prefetch="intent"
-            className="items-center gap-2 font-bold hidden md:flex"
+            className="hidden items-center gap-2 font-bold md:flex"
           >
             <span>Schedule a Call</span>
-            <IconArrow viewBox="0 0 19 12" className="w-5 h-5" />
+            <IconArrow viewBox="0 0 19 12" className="h-5 w-5" />
           </Link>
           <a href="mailto:hello@fiftheffect.com" className="text-sm">
             hello@fiftheffect.com
           </a>
         </div>
-        <div className="pb-3 md:hidden self-end">
+        <div className="self-end pb-3 md:hidden">
           <Link
             to="/contact"
             prefetch="intent"
             className="flex items-center gap-2 font-bold"
           >
             <span>Schedule a Call</span>
-            <IconArrow viewBox="0 0 19 12" className="w-5 h-5" />
+            <IconArrow viewBox="0 0 19 12" className="h-5 w-5" />
           </Link>
         </div>
         <div>
@@ -68,11 +71,21 @@ export function Footer({primaryMenu, secondaryMenu, title, logo}) {
             See open positions
           </Link>
         </div>
-        <div className="row-start-3 row-span-2 md:row-auto col-start-2 md:col-span-full lg:col-start-2 lg:col-span-3">
-          <div className="flex items-center flex-wrap justify-between">
+        <div className="hidden self-end lg:block">
+          <img
+            src={hydrogenLogo}
+            alt="Powered by Shopify Hydrogen"
+            className="h-auto w-[99px] md:w-[192px]"
+            width={192}
+            height={22}
+            loading="lazy"
+          />
+        </div>
+        <div className="col-start-2 row-span-2 row-start-3 md:col-span-full md:row-auto lg:col-span-3 lg:col-start-2">
+          <div className="flex flex-wrap items-center justify-between">
             <div className="grow">
               <h3 className="mb-2 md:mb-0">Explore</h3>
-              <ul className="flex flex-col md:flex-row flex-wrap gap-y-1 md:gap-y-0 md:gap-x-8">
+              <ul className="flex flex-col flex-wrap gap-y-1 md:flex-row md:gap-x-8 md:gap-y-0">
                 {(primaryMenu?.items || []).map((item) => (
                   <li key={item.id}>
                     <Link
@@ -92,8 +105,18 @@ export function Footer({primaryMenu, secondaryMenu, title, logo}) {
             </div>
           </div>
         </div>
-        <div className="md:hidden mt-4 col-span-full">
+        <div className="col-span-full mt-4 md:hidden">
           <FooterBottom menu={secondaryMenu} />
+        </div>
+        <div className="col-span-full -mt-3 lg:hidden">
+          <img
+            src={hydrogenLogo}
+            alt="Powered by Shopify Hydrogen"
+            className="mx-auto h-auto w-[99px] md:mx-0 md:w-[192px]"
+            width={192}
+            height={22}
+            loading="lazy"
+          />
         </div>
       </div>
     </footer>
@@ -103,14 +126,14 @@ export function Footer({primaryMenu, secondaryMenu, title, logo}) {
 function FooterBottom({menu}) {
   return (
     <>
-      <div className="flex items-center justify-center md:justify-end gap-5">
+      <div className="flex items-center justify-center gap-5 md:justify-end">
         <a
           href="https://www.instagram.com/fiftheffect"
           target="_blank"
           rel="noopener noreferrer"
         >
           <span className="sr-only">Instagram</span>
-          <IconInstagram viewBox="0 0 20 19" className="w-5 h-5" />
+          <IconInstagram viewBox="0 0 20 19" className="h-5 w-5" />
         </a>
         <a
           href="https://www.linkedin.com/company/fiftheffect/"
@@ -118,22 +141,22 @@ function FooterBottom({menu}) {
           rel="noopener noreferrer"
         >
           <span className="sr-only">Linkedin</span>
-          <IconLinkedin viewBox="0 0 19 19" className="w-5 h-5" />
+          <IconLinkedin viewBox="0 0 19 19" className="h-5 w-5" />
         </a>
-        <span className="border-r self-stretch border-light-gray"></span>
+        <span className="self-stretch border-r border-light-gray"></span>
         <button data-acsb-custom-trigger="true">
           <span className="sr-only">Accessibility</span>
-          <IconAccessibility viewBox="0 0 18 20" className="w-5 h-5" />
+          <IconAccessibility viewBox="0 0 18 20" className="h-5 w-5" />
         </button>
       </div>
-      <ul className="flex flex-wrap gap-4 justify-center md:justify-end mt-2 md:mt-5">
+      <ul className="mt-2 flex flex-wrap justify-center gap-4 md:mt-5 md:justify-end">
         {(menu?.items || []).map((item) => (
           <li key={item.id}>
             <Link
               to={item.to}
               target={item.target}
               prefetch="intent"
-              className="text-xs underline text-light-gray hover:text-dark"
+              className="text-xs text-light-gray underline hover:text-dark"
             >
               {item.title}
             </Link>

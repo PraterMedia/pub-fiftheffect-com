@@ -22,13 +22,17 @@ const Formaloo = () => {
 };
 const contactTabs = [
   {
-    label: 'Schedule A Call',
+    label: 'Book A Call',
     content: (
       <InlineWidget url="https://calendly.com/fiftheffect/potential-partnerships-onsite?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=3693ff" />
     ),
   },
   {
-    label: 'Send a Message',
+    label: (
+      <>
+        <span className="hidden md:inline">Send a </span>Message
+      </>
+    ),
     content: <Formaloo />,
   },
 ];
@@ -100,7 +104,7 @@ export function ContactHero({
                     selectedIndex === index
                       ? 'bg-secondary-accent'
                       : 'bg-borders',
-                    'rounded px-4 py-2 text-center text-xs font-medium text-dark transition duration-300 hover:opacity-85 md:px-8 md:py-4 md:text-base',
+                    'rounded px-4 py-2 text-center text-xs font-medium text-dark transition duration-300 hover:opacity-85 md:px-8 md:py-4 md:text-sm lg:text-base',
                   )}
                   role="tab"
                   aria-controls={`panel-id-${index}`}

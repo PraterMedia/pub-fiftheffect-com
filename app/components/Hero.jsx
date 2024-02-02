@@ -20,7 +20,7 @@ export function Hero({highlighted, heading, description, cta, media}) {
             <Heading
               className={clsx(
                 media ? 'max-w-[17ch]' : '',
-                'mb-5 text-5xl leading-solid md:mb-8 md:text-6xl lg:mb-12 lg:text-7xl',
+                'mb-5 text-5xl leading-snug md:mb-8 md:text-6xl md:leading-solid lg:mb-12 lg:text-7xl',
               )}
             >
               {heading.content}

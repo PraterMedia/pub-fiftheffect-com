@@ -16,7 +16,12 @@ export function SectionHeader({
   return (
     <div className={clsx(className, textAlignment)}>
       {pretitle && (
-        <div className="text-sm font-light uppercase leading-relaxed text-gray">
+        <div
+          className={clsx(
+            hideTitleMobile ? 'pb-4 md:pb-0' : '',
+            'text-sm font-light uppercase leading-relaxed text-gray',
+          )}
+        >
           {pretitle}
         </div>
       )}

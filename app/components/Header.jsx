@@ -8,7 +8,7 @@ export function Header({menu, title, logo, isHome}) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <header role="banner" className="sticky top-0 z-20 bg-white">
-      <div className="container relative flex flex-wrap items-center justify-between py-6 md:py-9">
+      <div className="container relative flex flex-wrap items-center justify-between py-2 md:py-9">
         <Logoelem>
           <Link
             className="text-2xl uppercase leading-none text-dark"
@@ -19,7 +19,7 @@ export function Header({menu, title, logo, isHome}) {
               <img
                 src={logo}
                 alt={title}
-                className="w-[116px] md:w-[187px]"
+                className="w-[186px]"
                 width={187}
                 height={47}
               />
@@ -77,9 +77,9 @@ export function Header({menu, title, logo, isHome}) {
         >
           <span className="sr-only">{isOpen ? 'Close menu' : 'Open menu'}</span>
           {isOpen ? (
-            <IconClose viewBox="0 0 15 15" />
+            <IconClose viewBox="0 0 15 15" className="h-5 w-5" />
           ) : (
-            <IconMenu viewBox="0 0 16 14" />
+            <IconMenu viewBox="0 0 16 14" className="h-5 w-5" />
           )}
         </button>
       </div>
