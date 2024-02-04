@@ -72,14 +72,16 @@ export function Footer({primaryMenu, secondaryMenu, title, logo}) {
           </Link>
         </div>
         <div className="hidden self-end lg:block">
-          <img
-            src={hydrogenLogo}
-            alt="Powered by Shopify Hydrogen"
-            className="h-auto w-[99px] md:w-[192px]"
-            width={192}
-            height={22}
-            loading="lazy"
-          />
+          <a href="https://hydrogen.shopify.dev/" target="_blank">
+            <img
+              src={hydrogenLogo}
+              alt="Powered by Shopify Hydrogen"
+              className="h-auto w-[99px] md:w-[192px]"
+              width={192}
+              height={22}
+              loading="lazy"
+            />
+          </a>
         </div>
         <div className="col-start-2 row-span-2 row-start-3 md:col-span-full md:row-auto lg:col-span-3 lg:col-start-2">
           <div className="flex flex-wrap items-center justify-between">
