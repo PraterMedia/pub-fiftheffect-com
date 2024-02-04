@@ -109,14 +109,16 @@ export function Footer({primaryMenu, secondaryMenu, title, logo}) {
           <FooterBottom menu={secondaryMenu} />
         </div>
         <div className="col-span-full -mt-3 lg:hidden">
-          <img
-            src={hydrogenLogo}
-            alt="Powered by Shopify Hydrogen"
-            className="mx-auto h-auto w-[99px] md:mx-0 md:w-[192px]"
-            width={192}
-            height={22}
-            loading="lazy"
-          />
+          <a href="https://hydrogen.shopify.dev/" target="_blank">
+            <img
+              src={hydrogenLogo}
+              alt="Powered by Shopify Hydrogen"
+              className="mx-auto h-auto w-[99px] md:mx-0 md:w-[192px]"
+              width={192}
+              height={22}
+              loading="lazy"
+            />
+          </a>
         </div>
       </div>
     </footer>
