@@ -196,16 +196,16 @@ export function ErrorBoundary() {
         <DriftChat />
       </head>
       <body>
-        <ErrorLayout
+        {/* <ErrorLayout
           key={`${locale.language}-${locale.country}`}
           layout={rootData.layout}
-        >
-          {isRouteError ? (
-            <>{routeError.status === 404 ? <NotFound /> : <GenericError />}</>
-          ) : (
-            <GenericError />
-          )}
-        </ErrorLayout>
+        > */}
+        {isRouteError ? (
+          <>{routeError.status === 404 ? <NotFound /> : <GenericError />}</>
+        ) : (
+          <GenericError />
+        )}
+        {/* </ErrorLayout> */}
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
         <LiveReload nonce={nonce} />
