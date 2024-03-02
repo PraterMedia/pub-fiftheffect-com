@@ -169,39 +169,43 @@ export default function App() {
   );
 }
 export function ErrorBoundary() {
-  const error = useRouteError();
+  const locale = DEFAULT_LOCALE;
   const rootData = useRootLoaderData();
   const nonce = useNonce();
-  let errorMessage = 'Unknown error';
-  let errorStatus = 500;
 
-  if (isRouteErrorResponse(error)) {
-    errorMessage = error?.data?.message ?? error.data;
-    errorStatus = error.status;
-  } else if (error instanceof Error) {
-    errorMessage = error.message;
+  const routeError = useRouteError();
+  const isRouteError = isRouteErrorResponse(routeError);
+
+  let title = 'Error';
+
+  if (isRouteError) {
+    title = 'Not found';
   }
 
   return (
-    <html lang="en">
+    <html lang={locale.language}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="msapplication-TileColor" content="#da532c" />
+        <meta name="msapplication-config" content="/icons/browserconfig.xml" />
+        <meta name="theme-color" content="#ffffff" />
+        <title>{title}</title>
         <Meta />
         <Links />
+        {/* <DriftChat /> */}
       </head>
       <body>
-        <Layout {...rootData}>
-          <div className="route-error">
-            <h1>Oops</h1>
-            <h2>{errorStatus}</h2>
-            {errorMessage && (
-              <fieldset>
-                <pre>{errorMessage}</pre>
-              </fieldset>
-            )}
-          </div>
-        </Layout>
+        <ErrorLayout
+          key={`${locale.language}-${locale.country}`}
+          layout={rootData.layout}
+        >
+          {isRouteError ? (
+            <>{routeError.status === 404 ? <NotFound /> : <GenericError />}</>
+          ) : (
+            <GenericError />
+          )}
+        </ErrorLayout>
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
         <LiveReload nonce={nonce} />
