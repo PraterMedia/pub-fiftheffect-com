@@ -1,3 +1,4 @@
+import {Link} from '@remix-run/react';
 import clsx from 'clsx';
 import {IconLink} from './Icon';
 import {Button} from './Button';
@@ -13,7 +14,11 @@ export function ErrorLayout({children, layout}) {
           Skip to content
         </a>
         <header className="container flex justify-center text-center">
-          <a href="/" className="text-2xl uppercase leading-none text-dark">
+          <Link
+            to="/"
+            prefetch="intent"
+            className="text-2xl uppercase leading-none text-dark"
+          >
             {logo ? (
               <img
                 src={logo}
@@ -25,7 +30,7 @@ export function ErrorLayout({children, layout}) {
             ) : (
               shopName
             )}
-          </a>
+          </Link>
         </header>
         <main id="mainContent" className="container flex-grow text-center">
           {children}
@@ -38,9 +43,10 @@ export function ErrorLayout({children, layout}) {
             <ul className="flex flex-wrap justify-center gap-x-5 gap-y-4 md:gap-x-8">
               {(footerMenu?.items || []).map((item) => (
                 <li key={item.id}>
-                  <a
-                    href={item.to}
+                  <Link
+                    to={item.to}
                     target={item.target}
+                    prefetch="intent"
                     className={clsx(
                       'text-sm tracking-wide md:text-base',
                       item.title.toLowerCase() === 'client login'
@@ -55,7 +61,7 @@ export function ErrorLayout({children, layout}) {
                       />
                     )}
                     {item.title}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
