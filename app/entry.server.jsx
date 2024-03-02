@@ -17,6 +17,13 @@ export default async function handleRequest(
 ) {
   let {nonce, header, NonceProvider} = createContentSecurityPolicy({
     frameSrc: ['https://calendly.com', 'https://js.driftt.com'],
+    imgSrc: [
+      'self',
+      'https://cdn.shopify.com',
+      'https://shopify.com',
+      'localhost:*',
+      'data:',
+    ],
   });
   header = header.replaceAll(
     'https://cdn.shopify.com',
