@@ -21,7 +21,7 @@ export const Button = forwardRef(
       'inline-block text-center text-base font-medium transition duration-300';
 
     const variants = {
-      primary: `${baseButtonClasses} rounded border border-solid px-8 py-4 bg-secondary-accent border-secondary-accent text-dark hover:bg-white hover:text-secondary-accent`,
+      primary: `${baseButtonClasses} rounded border border-solid px-8 py-4 bg-secondary-accent border-secondary-accent text-dark hover:bg-dark hover:text-white hover:border-dark`,
       secondary: `${baseButtonClasses} rounded border border-solid px-8 py-4 border-secondary-accent bg-white text-secondary-accent hover:bg-secondary-accent hover:text-white`,
       inline: 'p-0 text-dark hover:text-primary-accent font-bold',
       inlineWhite: 'p-0 text-white hover:text-dark font-bold',

@@ -51,7 +51,7 @@ export function BeforeAfter() {
 
             <div className="flex justify-between md:block lg:pl-24">
               {/* Desktop text */}
-              <div className="hidden space-y-6 text-justify md:block">
+              <div className="hidden space-y-6 md:block">
                 <p>
                   Compression Sale reached out to us after experiencing a
                   misfire while migrating to Shopify. After we launched their
@@ -74,13 +74,13 @@ export function BeforeAfter() {
                   duration={5}
                   prefix="+"
                   suffix=" %"
-                  decimal=","
+                  decimal="."
                   decimals={2}
                 />
               </div>
               {/* Counter details */}
               <div className="mt-3 max-w-[185px] text-dark md:max-w-none md:text-center lg:max-w-[185px] lg:text-start lg:text-xl">
-                1-year Conversion Rate Improvement
+                1-Year Conversion Rate Improvement
               </div>
             </div>
           </div>

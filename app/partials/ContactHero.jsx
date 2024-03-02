@@ -3,7 +3,10 @@ import {useState, useRef, useEffect} from 'react';
 import {InlineWidget} from 'react-calendly';
 
 const Formaloo = () => {
+  let loaded = false;
   useEffect(() => {
+    if (loaded) return;
+    loaded = true;
     const script = document.createElement('script');
     script.src = 'https://formaloo.me/istatic/js/main.js';
     script.async = true;
@@ -90,8 +93,8 @@ export function ContactHero({
               dangerouslySetInnerHTML={{__html: description}}
             ></div>
           )}
-          <div className="flex justify-end md:justify-start">
-            <div className="mt-8 grid w-full max-w-72 grid-cols-2 items-center gap-1 rounded border border-solid border-light-gray p-[2px] md:max-w-96 lg:mt-12">
+          <div className="flex justify-center md:justify-start">
+            <div className="mt-8 grid w-full max-w-72 grid-cols-2 gap-1 rounded border border-solid border-light-gray p-[2px] md:max-w-[24.5rem] lg:mt-12">
               {contactTabs.map((tab, index) => (
                 <button
                   key={`tab-${index}`}
@@ -122,7 +125,7 @@ export function ContactHero({
             secondaryDescription={secondaryDescription}
           />
         </div>
-        <div className="mt-9 md:mt-0 md:flex-1">
+        <div className="mt-6 md:mt-0 md:flex-1">
           {contactTabs.map((tab, index) => (
             <div
               key={`tabpanel-${index}`}

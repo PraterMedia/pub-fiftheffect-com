@@ -38,7 +38,7 @@ export function Testimonials() {
         <div className="relative border-t border-primary-accent">
           <Splide
             aria-label="Testimonials"
-            className="testimonials__splide pb-12 pt-9 md:pb-19 md:pt-20"
+            className="testimonials__splide pb-19 pt-9 md:pb-24 md:pt-20 lg:pb-19"
             hasTrack={false}
             options={{
               type: 'slide',
@@ -58,7 +58,7 @@ export function Testimonials() {
                       src={starsImg}
                       alt="5 stars"
                     />
-                    <p className="mb-4">{item.text}</p>
+                    <p className="mb-4 md:leading-[1.75]">{item.text}</p>
                     <div className="flex flex-col-reverse justify-between gap-2 md:flex-row md:items-center">
                       <img
                         className="block h-10 w-28 object-contain object-left"
@@ -74,9 +74,9 @@ export function Testimonials() {
             </SplideTrack>
             <div
               ref={animatedLinesRef}
-              className="absolute bottom-0 left-0 right-0 flex justify-center"
+              className="absolute bottom-10 left-0 right-0 flex justify-center lg:bottom-0"
             >
-              <div className="relative w-3/12">
+              <div className="relative w-1/2 lg:w-3/12">
                 <ul className="splide__pagination"></ul>
                 <span
                   style={{
@@ -91,7 +91,7 @@ export function Testimonials() {
                   className="absolute right-0 top-0 w-[0.5px] bg-primary-accent transition-all delay-500 duration-300"
                 ></span>
               </div>
-              <div className="relative h-5 w-3/4 md:h-8">
+              <div className="relative h-5 w-1/2 md:h-8 lg:w-3/4">
                 <span
                   style={{
                     width: isInView ? '100%' : '0',
@@ -100,8 +100,8 @@ export function Testimonials() {
                 ></span>
               </div>
             </div>
-            <div className="splide__arrows mt-5 flex items-center justify-between lg:mt-0 lg:block">
-              <button className="splide__arrow splide__arrow--prev left-0 top-1/2 flex h-7 w-16 transform items-center justify-center rounded-full border border-gray bg-white lg:absolute lg:-translate-y-1/2">
+            <div className="splide__arrows absolute bottom-0 left-0 mt-5 flex w-full items-center justify-between lg:static lg:mt-0 lg:block">
+              <button className="splide__arrow splide__arrow--prev left-0 top-1/2 flex h-7 w-16 transform items-center justify-center rounded-full border border-solid border-gray bg-white lg:absolute lg:-translate-y-1/2">
                 <span className="sr-only">Prev</span>
                 <IconLongArrowLeft
                   width={27}
@@ -109,7 +109,7 @@ export function Testimonials() {
                   className="h-2 w-auto"
                 />
               </button>
-              <button className="splide__arrow splide__arrow--next right-0 top-1/2 flex h-7 w-16 transform items-center justify-center rounded-full border border-gray bg-white lg:absolute lg:-translate-y-1/2">
+              <button className="splide__arrow splide__arrow--next right-0 top-1/2 flex h-7 w-16 transform items-center justify-center rounded-full border border-solid border-gray bg-white lg:absolute lg:-translate-y-1/2">
                 <span className="sr-only">Next</span>
                 <IconLongArrowRight
                   width={27}

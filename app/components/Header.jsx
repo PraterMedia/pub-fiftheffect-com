@@ -1,15 +1,30 @@
 import {Link, NavLink} from '@remix-run/react';
-import {useState} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import clsx from 'clsx';
-import {IconUser, IconMenu, IconClose} from './Icon';
+import {IconUser, IconMenu, IconClose, IconLink} from './Icon';
 
 export function Header({menu, title, logo, isHome}) {
   const Logoelem = isHome ? `h1` : `div`;
   const [isOpen, setIsOpen] = useState(false);
+  const ref = useRef(null);
+  useEffect(() => {
+    const handleOutSideClick = (event) => {
+      if (!ref.current?.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener('mousedown', handleOutSideClick);
+
+    return () => {
+      window.removeEventListener('mousedown', handleOutSideClick);
+    };
+  }, [ref]);
+
   return (
     <header role="banner" className="sticky top-0 z-20 bg-white">
       <div className="container relative flex flex-wrap items-center justify-between py-2 md:py-9">
-        <Logoelem>
+        <Logoelem className="max-w-[70%]">
           <Link
             className="text-2xl uppercase leading-none text-dark"
             to="/"
@@ -19,7 +34,7 @@ export function Header({menu, title, logo, isHome}) {
               <img
                 src={logo}
                 alt={title}
-                className="w-[186px]"
+                className="w-[187px] max-w-full"
                 width={187}
                 height={47}
               />
@@ -32,11 +47,12 @@ export function Header({menu, title, logo, isHome}) {
         <nav
           className={clsx(
             isOpen ? 'block' : 'hidden',
-            'absolute right-0 top-0 w-1/2 bg-white pt-[88px] shadow-header md:static md:block md:w-auto md:bg-transparent md:pt-0 md:shadow-none',
+            'absolute right-0 top-0 w-4/5 bg-white pt-[70px] shadow-header xs:w-1/2 md:static md:block md:w-auto md:bg-transparent md:pt-0 md:shadow-none',
           )}
           id="navbar-header"
+          ref={ref}
         >
-          <ul className="px-4 py-9 text-sm md:flex md:gap-8 md:p-0 md:text-base">
+          <ul className="items-center px-4 pb-9 text-xl md:flex md:gap-4 md:p-0 md:text-base">
             {(menu?.items || []).map((item) => (
               <li
                 key={item.id}
@@ -49,8 +65,8 @@ export function Header({menu, title, logo, isHome}) {
                   className={({isActive}) =>
                     clsx(
                       'border-b py-1 text-dark transition duration-300 md:hover:text-dark',
-                      item.title.toLowerCase() === 'account'
-                        ? 'hover:opacity-70'
+                      item.title.toLowerCase() === 'client login'
+                        ? 'hover:opacity-70 md:block md:border-l md:border-l-light-gray md:pl-4'
                         : 'hover:border-b-primary-accent',
                       isActive
                         ? 'border-b-primary-accent'
@@ -58,8 +74,20 @@ export function Header({menu, title, logo, isHome}) {
                     )
                   }
                 >
-                  {item.title.toLowerCase() === 'account' ? (
-                    <IconUser viewBox="0 0 24 24" className="h-6 w-6" />
+                  {item.title.toLowerCase() === 'client login' ? (
+                    <>
+                      <IconUser
+                        viewBox="0 0 16 16"
+                        className="hidden h-4 w-4 md:block"
+                      />
+                      <span className="relative pr-3 md:hidden">
+                        {item.title}
+                        <IconLink
+                          viewBox="0 0 8 8"
+                          className="absolute right-0 top-0 h-2 w-2"
+                        />
+                      </span>
+                    </>
                   ) : (
                     item.title
                   )}

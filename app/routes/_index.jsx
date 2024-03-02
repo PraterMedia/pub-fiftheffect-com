@@ -48,6 +48,7 @@ export default function Homepage() {
     <>
       <Hero
         highlighted="true"
+        className="pb-4 pt-8 md:pb-0 md:pt-14"
         heading={{
           useH1: 'true',
           content: "Unlock Your Shopify Store's True Potential",

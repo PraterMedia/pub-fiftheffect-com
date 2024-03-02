@@ -9,7 +9,7 @@
 	--clr-white : #ffffff;
 	--clr-primary-accent : #3693FF;
 	--clr-primary-accent-light : #cce4ff;
-	--clr-secondary-accent : #FDC52F;
+	--clr-secondary-accent : #1CE38F;
 	--clr-tertiary-accent : #f7dc7d;
 	--clr-borders : #FCFAF8;
 	--clr-gray : #636363;
@@ -19,7 +19,6 @@
 }
 body{
 	@apply text-dark-blue bg-white leading-snug font-body font-normal;
-	/* letter-spacing: 1px */
 }
 a{
 	@apply transition-colors duration-200 ease-in-out;
@@ -57,7 +56,7 @@ h3{
 	line-height: 0;
 }
 .testimonials__splide .splide__pagination__page{
-	@apply bg-white w-full h-full rounded-full border border-primary-accent 
+	@apply bg-white w-full h-full rounded-full border border-primary-accent border-solid
 }
 .testimonials__splide .splide__pagination__page.is-active{
 	@apply bg-primary-accent
@@ -117,6 +116,23 @@ summary::-webkit-details-marker {
 }
 .form-checkbox-input .formz-checkbox-wrapper{
     padding: 5px 0 0!important
+}
+[class^="styles_success-submit__modern__"]{
+	min-width: 100%!important;
+    background-color: var(--clr-borders )!important;
+    border-color: var(--clr-gray)!important;
+	text-align: center;
+}
+[class^="styles_form-submit-message__"]{
+	padding: 0!important
+}
+[class^="styles_success-submit__modern__"] > br{
+	display: none
+}
+@media screen and (min-width: 768px) {
+	[class^="styles_success-submit__modern__"]{
+		padding: 30px!important;
+	}
 }
 @font-face {
 	font-family: 'Helveticaneueltpro';

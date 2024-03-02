@@ -44,8 +44,8 @@ export function HomePrimaryOverlay() {
 export function HomeSecondaryOverlay() {
   return (
     <section className="bg-primary-accent">
-      <div className="container relative overflow-hidden pb-24 pt-19">
-        <h2 className="mb-1 text-3xl font-medium leading-tight text-white md:text-6xl">
+      <div className="container relative overflow-hidden py-7 md:py-20">
+        <h2 className="mb-5 text-3xl font-medium leading-tight text-white md:mb-2 md:text-6xl">
           Ready to Work With Us?
         </h2>
         <p className="tracking-wide text-white md:text-lg">
@@ -54,7 +54,7 @@ export function HomeSecondaryOverlay() {
         <Button
           to="/contact"
           variant="inlineWhite"
-          className="mt-7 flex items-center gap-x-2 md:mt-6"
+          className="mt-5 flex items-center gap-x-2 md:mt-7"
         >
           Discover More
           <IconArrow viewBox="0 0 19 12" className="h-5 w-5" />
@@ -93,8 +93,8 @@ export function HomeSecondaryOverlay() {
 export function CapabilitiesOverlay() {
   return (
     <section className="relative bg-primary-accent">
-      <div className="container relative overflow-hidden pb-24 pt-19">
-        <h2 className="mb-1 text-3xl font-medium leading-tight text-white md:text-6xl">
+      <div className="container relative overflow-hidden py-9 md:py-20">
+        <h2 className="mb-5 text-3xl font-medium leading-tight text-white md:mb-2 md:text-6xl">
           Got questions?
         </h2>
         <p className="tracking-wide text-white md:text-lg">
@@ -103,7 +103,7 @@ export function CapabilitiesOverlay() {
         <Button
           to="/contact"
           variant="inlineWhite"
-          className="mt-7 flex items-center gap-x-2 md:mt-6"
+          className="mt-5 flex items-center gap-x-2 md:mt-7"
         >
           Get Answers
           <IconArrow viewBox="0 0 19 12" className="h-5 w-5" />
@@ -130,7 +130,7 @@ export function CapabilitiesOverlay() {
 export function WorkOverlay() {
   return (
     <section className="relative bg-dark">
-      <div className="container relative overflow-hidden pb-20 pt-20">
+      <div className="container relative overflow-hidden py-12 md:py-20">
         <div className="relative pl-10">
           <h2 className="mb-1 text-3xl font-medium leading-tight text-white md:text-6xl">
             Interested?
@@ -161,8 +161,8 @@ export function WorkOverlay() {
 export function AboutOverlay() {
   return (
     <section className="relative bg-tertiary-accent">
-      <div className="container relative z-10 overflow-hidden pb-24 pt-19">
-        <h2 className="mb-1 text-3xl font-medium leading-tight md:text-6xl">
+      <div className="container relative z-10 overflow-hidden py-10 md:py-20">
+        <h2 className="mb-5 text-3xl font-medium leading-tight md:mb-2 md:text-6xl">
           Give your users a gift
         </h2>
         <p className="tracking-wide md:text-lg">
@@ -171,7 +171,7 @@ export function AboutOverlay() {
         <Button
           to="/contact"
           variant="inline"
-          className="mt-7 flex items-center gap-x-2 md:mt-6"
+          className="mt-5 flex items-center gap-x-2 md:mt-7"
         >
           Let's Do Better, Together
           <IconArrow viewBox="0 0 19 12" className="h-5 w-5" />

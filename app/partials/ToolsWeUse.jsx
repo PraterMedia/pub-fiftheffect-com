@@ -113,7 +113,7 @@ export function ToolsWeUse() {
                     width={image.width}
                     height={image.height}
                     alt={image.alt}
-                    className="block h-auto max-h-6 w-full object-contain lg:max-h-9"
+                    className="block h-6 w-auto object-contain"
                   />
                 </SplideSlide>
               ))}

@@ -1,12 +1,29 @@
 import clsx from 'clsx';
+import {missingClass} from '~/lib/utils';
 import {LottiePlayer} from '~/components/LottiePlayer';
 import {Button} from '~/components/Button';
 import {IconArrow} from './Icon';
+import {m} from 'framer-motion';
 
-export function Hero({highlighted, heading, description, cta, media}) {
+export function Hero({
+  highlighted,
+  heading,
+  description,
+  cta,
+  media,
+  className = '',
+}) {
   const Heading = heading?.useH1 ? 'h1' : 'h2';
   return (
-    <section className={clsx(highlighted ? 'bg-borders' : '', 'py-8 md:py-14')}>
+    <section
+      className={clsx(
+        highlighted ? 'bg-borders' : '',
+        missingClass(className, 'pb-') &&
+          missingClass(className, 'pt-') &&
+          'py-8 md:py-14',
+        className,
+      )}
+    >
       <div
         className={clsx(
           media
@@ -58,7 +75,12 @@ export function Hero({highlighted, heading, description, cta, media}) {
           )}
         </div>
         {media?.src && (
-          <div className="md:w-1/2 md:flex-1">
+          <div
+            className={clsx(
+              media?.type === 'lottie' ? '' : 'mt-8 md:mt-0 ',
+              'md:w-1/2 md:flex-1',
+            )}
+          >
             {media?.type === 'lottie' ? (
               <LottiePlayer src={media.src} />
             ) : (
