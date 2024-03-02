@@ -193,7 +193,6 @@ export function ErrorBoundary() {
         <title>{title}</title>
         <Meta />
         <Links />
-        <DriftChat />
       </head>
       <body>
         <ErrorLayout
