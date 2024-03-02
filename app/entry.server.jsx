@@ -24,7 +24,7 @@ export default async function handleRequest(
   );
   header = header.replaceAll(
     'https://monorail-edge.shopifysvc.com',
-    'https://monorail-edge.shopifysvc.com https://api.formaloo.me https://cdn.acsbapp.com',
+    'https://monorail-edge.shopifysvc.com https://api.formaloo.me https://cdn.acsbapp.com https://acsbapp.com',
   );
   const body = await renderToReadableStream(
     <NonceProvider>
