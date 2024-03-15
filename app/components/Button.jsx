@@ -18,7 +18,7 @@ export const Button = forwardRef(
     const Component = props?.to ? Link : as;
 
     const baseButtonClasses =
-      'inline-block text-center text-base font-medium transition duration-300 leading-tight';
+      'inline-block text-center text-base font-medium transition duration-300 leading-none';
 
     const variants = {
       primary: `${baseButtonClasses} rounded border border-solid px-8 py-4 bg-secondary-accent border-secondary-accent text-dark hover:bg-dark hover:text-white hover:border-dark`,

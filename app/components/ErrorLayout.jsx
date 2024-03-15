@@ -1,15 +1,29 @@
 import {Link} from '@remix-run/react';
+import {useState, useEffect} from 'react';
 import clsx from 'clsx';
 import {IconLink} from './Icon';
 import {Button} from './Button';
 
 export function ErrorLayout({children, layout}) {
+  const [vh, setVh] = useState('100vh');
+  useEffect(() => {
+    const updateVh = () => {
+      setVh(window.innerHeight);
+    };
+    updateVh();
+    window.addEventListener('resize', updateVh);
+
+    return () => window.removeEventListener('resize', updateVh);
+  }, []);
   const logo = layout?.shop.brand?.logo?.image?.url;
   const shopName = layout?.shop.name ?? 'Fiftheffect';
   const footerMenu = layout?.footerMenu;
   return (
     <>
-      <div className="flex min-h-[100vh] flex-col py-12">
+      <div
+        className="flex min-h-[100vh] flex-col py-12"
+        style={{minHeight: vh}}
+      >
         <a href="#mainContent" className="sr-only">
           Skip to content
         </a>
