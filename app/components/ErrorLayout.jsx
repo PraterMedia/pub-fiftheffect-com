@@ -9,7 +9,7 @@ export function ErrorLayout({children, layout}) {
   const footerMenu = layout?.footerMenu;
   return (
     <>
-      <div className="py-19 md:py-14">
+      <div className="flex min-h-[100vh] flex-col py-12">
         <a href="#mainContent" className="sr-only">
           Skip to content
         </a>
@@ -32,9 +32,12 @@ export function ErrorLayout({children, layout}) {
             )}
           </Link>
         </header>
-        <main id="mainContent" className="container flex-grow text-center">
+        <main
+          id="mainContent"
+          className="container w-full flex-grow text-center"
+        >
           {children}
-          <Button className="mt-11 md:mt-11" variant="primary" to={'/'}>
+          <Button className="mt-7" variant="primary" to={'/'}>
             Return Home
           </Button>
         </main>

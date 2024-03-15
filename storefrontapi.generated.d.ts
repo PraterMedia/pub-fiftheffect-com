@@ -158,6 +158,21 @@ export type ContactPageDetailsQuery = {
   >;
 };
 
+export type WorkPageDetailsQueryVariables = StorefrontAPI.Exact<{
+  language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
+  handle: StorefrontAPI.Scalars['String']['input'];
+}>;
+
+export type WorkPageDetailsQuery = {
+  page?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Page, 'id' | 'title' | 'body'> & {
+      seo?: StorefrontAPI.Maybe<
+        Pick<StorefrontAPI.Seo, 'description' | 'title'>
+      >;
+    }
+  >;
+};
+
 export type PageQueryVariables = StorefrontAPI.Exact<{
   language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
   country?: StorefrontAPI.InputMaybe<StorefrontAPI.CountryCode>;
@@ -420,21 +435,6 @@ export type TermsConditionsPageDetailsQuery = {
   >;
 };
 
-export type WorkPageDetailsQueryVariables = StorefrontAPI.Exact<{
-  language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
-  handle: StorefrontAPI.Scalars['String']['input'];
-}>;
-
-export type WorkPageDetailsQuery = {
-  page?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Page, 'id' | 'title' | 'body'> & {
-      seo?: StorefrontAPI.Maybe<
-        Pick<StorefrontAPI.Seo, 'description' | 'title'>
-      >;
-    }
-  >;
-};
-
 export type MoneyFragment = Pick<
   StorefrontAPI.MoneyV2,
   'currencyCode' | 'amount'
@@ -562,6 +562,10 @@ interface GeneratedQueryTypes {
     return: ContactPageDetailsQuery;
     variables: ContactPageDetailsQueryVariables;
   };
+  '#graphql\n  query WorkPageDetails($language: LanguageCode, $handle: String!)\n  @inContext(language: $language) {\n    page(handle: $handle) {\n      id\n\t  title\n\t  body\n      seo {\n        description\n        title\n      }\n    }\n  }\n': {
+    return: WorkPageDetailsQuery;
+    variables: WorkPageDetailsQueryVariables;
+  };
   '#graphql\n  query Page(\n    $language: LanguageCode,\n    $country: CountryCode,\n    $handle: String!\n  )\n  @inContext(language: $language, country: $country) {\n    page(handle: $handle) {\n      id\n      title\n      body\n      seo {\n        description\n        title\n      }\n    }\n  }\n': {
     return: PageQuery;
     variables: PageQueryVariables;
@@ -581,10 +585,6 @@ interface GeneratedQueryTypes {
   '#graphql\n  query TermsConditionsPageDetails($language: LanguageCode, $handle: String!)\n  @inContext(language: $language) {\n    page(handle: $handle) {\n      id\n\t  title\n\t  body\n      seo {\n        description\n        title\n      }\n    }\n  }\n': {
     return: TermsConditionsPageDetailsQuery;
     variables: TermsConditionsPageDetailsQueryVariables;
-  };
-  '#graphql\n  query WorkPageDetails($language: LanguageCode, $handle: String!)\n  @inContext(language: $language) {\n    page(handle: $handle) {\n      id\n\t  title\n\t  body\n      seo {\n        description\n        title\n      }\n    }\n  }\n': {
-    return: WorkPageDetailsQuery;
-    variables: WorkPageDetailsQueryVariables;
   };
 }
 

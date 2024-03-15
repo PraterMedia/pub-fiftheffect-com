@@ -62,6 +62,7 @@ export function Header({menu, title, logo, isHome}) {
                   to={item.to}
                   target={item.target}
                   prefetch="intent"
+                  onClick={() => setIsOpen(false)}
                   className={({isActive}) =>
                     clsx(
                       'border-b py-1 text-dark transition duration-300 md:hover:text-dark',

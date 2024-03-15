@@ -6,10 +6,10 @@ export function NotFound() {
 
   return (
     <>
-      <div className="mx-auto my-16 max-w-[343px] md:max-w-[635px] lg:max-w-[855px]">
+      <div className="mx-auto my-10 max-w-[80%] sm:max-w-[45%]">
         <Icon404 className="h-auto w-full" />
       </div>
-      <h1 className="mb-6 text-2xl font-medium md:text-6xl">{heading}</h1>
+      <h1 className="mb-5 text-2xl font-medium md:text-6xl">{heading}</h1>
       <p dangerouslySetInnerHTML={{__html: description}}></p>
     </>
   );

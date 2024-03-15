@@ -16,7 +16,11 @@ export default async function handleRequest(
   remixContext,
 ) {
   let {nonce, header, NonceProvider} = createContentSecurityPolicy({
-    frameSrc: ['https://calendly.com', 'https://js.driftt.com'],
+    frameSrc: [
+      'https://calendly.com',
+      'https://js.driftt.com',
+      'https://*.stripe.com',
+    ],
     imgSrc: [
       'self',
       'https://cdn.shopify.com',
@@ -27,7 +31,7 @@ export default async function handleRequest(
   });
   header = header.replaceAll(
     'https://cdn.shopify.com',
-    'https://cdn.shopify.com https://fonts.gstatic.com https://fonts.googleapis.com https://formaloo.me https://js.driftt.com https://acsbapp.com',
+    'https://cdn.shopify.com https://*.stripe.com https://stripe.com https://fonts.gstatic.com https://fonts.googleapis.com https://formaloo.me https://js.driftt.com https://acsbapp.com',
   );
   header = header.replaceAll(
     'https://monorail-edge.shopifysvc.com',
