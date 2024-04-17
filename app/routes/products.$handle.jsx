@@ -1,6 +1,7 @@
 import {Suspense} from 'react';
 import {defer, redirect} from '@shopify/remix-oxygen';
 import {Await, Link, useLoaderData} from '@remix-run/react';
+import {Button} from '~/components/Button';
 
 import {
   Image,
@@ -9,12 +10,12 @@ import {
   getSelectedProductOptions,
   CartForm,
 } from '@shopify/hydrogen';
-import {getVariantUrl} from '~/utils';
+import {getVariantUrl} from '~/lib/variants';
 
 /**
  * @type {MetaFunction<typeof loader>}
  */
-export const meta = ({data}) => {
+export const meta = ({data, location}) => {
   return [{title: `Hydrogen | ${data?.product.title ?? ''}`}];
 };
 
@@ -303,13 +304,17 @@ function AddToCartButton({analytics, children, disabled, lines, onClick}) {
             type="hidden"
             value={JSON.stringify(analytics)}
           />
-          <button
+		  <Button className="mt-7" type="submit"
+            onClick={onClick} variant="primary" disabled={disabled ?? fetcher.state !== 'idle'}>
+            {children}
+          </Button>
+          {/* <button
             type="submit"
             onClick={onClick}
             disabled={disabled ?? fetcher.state !== 'idle'}
           >
             {children}
-          </button>
+          </button> */}
         </>
       )}
     </CartForm>
@@ -365,7 +370,7 @@ const PRODUCT_FRAGMENT = `#graphql
       name
       values
     }
-    selectedVariant: variantBySelectedOptions(selectedOptions: $selectedOptions) {
+    selectedVariant: variantBySelectedOptions(selectedOptions: $selectedOptions, ignoreUnknownOptions: true, caseInsensitiveMatch: true) {
       ...ProductVariant
     }
     variants(first: 1) {

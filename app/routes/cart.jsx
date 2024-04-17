@@ -16,12 +16,9 @@ export const meta = () => {
  * @param {ActionFunctionArgs}
  */
 export async function action({request, context}) {
-  const {session, cart} = context;
+  const {cart} = context;
 
-  const [formData, customerAccessToken] = await Promise.all([
-    request.formData(),
-    session.get('customerAccessToken'),
-  ]);
+  const formData = await request.formData();
 
   const {action, inputs} = CartForm.getFormInput(formData);
 
@@ -57,14 +54,13 @@ export async function action({request, context}) {
     case CartForm.ACTIONS.BuyerIdentityUpdate: {
       result = await cart.updateBuyerIdentity({
         ...inputs.buyerIdentity,
-        customerAccessToken: customerAccessToken?.accessToken,
       });
       break;
     }
     default:
       throw new Error(`${action} cart action is not defined`);
   }
-
+  console.log('result', result);
   const cartId = result.cart.id;
   const headers = cart.setCartId(result.cart.id);
   const {cart: cartResult, errors} = result;
@@ -74,6 +70,8 @@ export async function action({request, context}) {
     status = 303;
     headers.set('Location', redirectTo);
   }
+
+  headers.append('Set-Cookie', await context.session.commit());
 
   return json(
     {
@@ -109,6 +107,6 @@ export default function Cart() {
 }
 
 /** @template T @typedef {import('@remix-run/react').MetaFunction<T>} MetaFunction */
-/** @typedef {import('@shopify/hydrogen').CartQueryData} CartQueryData */
+/** @typedef {import('@shopify/hydrogen').CartQueryDataReturn} CartQueryDataReturn */
 /** @typedef {import('@shopify/remix-oxygen').ActionFunctionArgs} ActionFunctionArgs */
 /** @typedef {import('@shopify/remix-oxygen').SerializeFrom<typeof action>} ActionReturnData */
