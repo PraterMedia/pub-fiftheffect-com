@@ -277,7 +277,7 @@ aside li {
   transition: opacity 400ms ease-in-out;
   transition: opacity 400ms;
   visibility: hidden;
-  z-index: 21;
+  z-index: 21
 }
 
 .overlay .close-outside {
