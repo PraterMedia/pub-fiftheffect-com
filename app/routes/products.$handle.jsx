@@ -368,7 +368,7 @@ function ProductForm({
         disabled={
           !selectedVariant ||
           !selectedVariant.availableForSale ||
-          !selectedSellingPlan
+          (sellingPlanGroups?.nodes.length && !selectedSellingPlan)
         }
         onClick={() => {
           window.location.href = window.location.href + '#cart-aside';
