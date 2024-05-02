@@ -42,7 +42,7 @@ function home() {
 	return {
 	  description: truncate(page?.seo?.description || ''),
 	  title: page?.seo?.title ?? page?.title,
-	  titleTemplate: '%s | Fifth Effect',
+	  titleTemplate: '%s | Fifth Effect Studios',
 	  url,
 	  jsonLd: {
 		'@context': 'https://schema.org',
@@ -51,9 +51,29 @@ function home() {
 	  },
 	};
   }
+  function product({product, url}) {
+	return {
+	  description: truncate(product?.seo?.description || ''),
+	  title: product?.seo?.title ?? product?.title,
+	  titleTemplate: '%s | Fifth Effect Studios',
+	  url,
+	  jsonLd: {
+		'@context': 'https://schema.org',
+		'@type': 'Product',
+		name: product.title,
+		image: product.images?.[0]?.src,
+		description: truncate(product?.description || ''),
+		brand: {
+		  '@type': 'Brand',
+		  name: 'Fifth Effect Studios',
+		},
+	  },
+	};
+	  }
 export const seoPayload = {
 	home,
 	page,
+	product,
 	root,
   };
   

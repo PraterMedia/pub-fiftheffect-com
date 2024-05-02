@@ -9,7 +9,7 @@ import {useRootLoaderData} from '~/root';
  * @type {MetaFunction}
  */
 export const meta = () => {
-  return [{title: `Hydrogen | Cart`}];
+  return [{title: `Fifth Effect Studios | Cart`}];
 };
 
 /**
@@ -60,7 +60,7 @@ export async function action({request, context}) {
     default:
       throw new Error(`${action} cart action is not defined`);
   }
-  console.log('result', result);
+
   const cartId = result.cart.id;
   const headers = cart.setCartId(result.cart.id);
   const {cart: cartResult, errors} = result;

@@ -66,7 +66,7 @@ function CartLines({lines, layout}) {
  * }}
  */
 function CartLineItem({layout, line}) {
-  const {id, merchandise} = line;
+  const {id, merchandise, sellingPlanAllocation} = line;
   const {product, title, image, selectedOptions} = merchandise;
   const lineItemUrl = useVariantUrl(product.handle, selectedOptions);
 
@@ -100,6 +100,11 @@ function CartLineItem({layout, line}) {
         </Link>
         <CartLinePrice line={line} as="span" />
         <ul>
+          {sellingPlanAllocation && (
+            <li key={sellingPlanAllocation.sellingPlan.name}>
+              <small>{sellingPlanAllocation.sellingPlan.name}</small>
+            </li>
+          )}
           {selectedOptions.map((option) => (
             <li key={option.name}>
               <small>
