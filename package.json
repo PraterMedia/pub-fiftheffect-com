@@ -50,6 +50,9 @@
 		"tailwindcss": "^3.4.1",
 		"typescript": "^5.2.2"
 	},
+	"overrides": {
+		"@shopify/cli-kit": "^3.54.4"
+	},
 	"engines": {
 		"node": ">=18.0.0"
 	}

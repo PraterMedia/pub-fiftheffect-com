@@ -90,7 +90,7 @@ function parseItem(customPrefixes = {}) {
 				Currently the MenuAPI only returns online store urls e.g — xyz.myshopify.com/..
 				Note: update logic when API is updated to include the active qualified domain
 			  */
-	  const isInternalLink = /\.myshopify\.com|shop\.fiftheffect\.com/g.test(item.url);
+	  const isInternalLink = /\.myshopify\.com|shop\.fiftheffect\.com|checkout\.fiftheffect\.com/g.test(item.url);
 	  
 	  const parsedItem = isInternalLink
 		? // internal links
