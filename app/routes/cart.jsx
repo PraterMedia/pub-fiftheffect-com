@@ -9,19 +9,16 @@ import {useRootLoaderData} from '~/root';
  * @type {MetaFunction}
  */
 export const meta = () => {
-  return [{title: `Hydrogen | Cart`}];
+  return [{title: `Fifth Effect Studios | Cart`}];
 };
 
 /**
  * @param {ActionFunctionArgs}
  */
 export async function action({request, context}) {
-  const {session, cart} = context;
+  const {cart} = context;
 
-  const [formData, customerAccessToken] = await Promise.all([
-    request.formData(),
-    session.get('customerAccessToken'),
-  ]);
+  const formData = await request.formData();
 
   const {action, inputs} = CartForm.getFormInput(formData);
 
@@ -57,7 +54,6 @@ export async function action({request, context}) {
     case CartForm.ACTIONS.BuyerIdentityUpdate: {
       result = await cart.updateBuyerIdentity({
         ...inputs.buyerIdentity,
-        customerAccessToken: customerAccessToken?.accessToken,
       });
       break;
     }
@@ -70,10 +66,12 @@ export async function action({request, context}) {
   const {cart: cartResult, errors} = result;
 
   const redirectTo = formData.get('redirectTo') ?? null;
-  if (typeof redirectTo === 'string') {
+  if (redirectTo === 'checkout' && cartResult.checkoutUrl) {
     status = 303;
-    headers.set('Location', redirectTo);
+    headers.set('Location', cartResult.checkoutUrl);
   }
+
+  headers.append('Set-Cookie', await context.session.commit());
 
   return json(
     {
@@ -109,6 +107,6 @@ export default function Cart() {
 }
 
 /** @template T @typedef {import('@remix-run/react').MetaFunction<T>} MetaFunction */
-/** @typedef {import('@shopify/hydrogen').CartQueryData} CartQueryData */
+/** @typedef {import('@shopify/hydrogen').CartQueryDataReturn} CartQueryDataReturn */
 /** @typedef {import('@shopify/remix-oxygen').ActionFunctionArgs} ActionFunctionArgs */
 /** @typedef {import('@shopify/remix-oxygen').SerializeFrom<typeof action>} ActionReturnData */

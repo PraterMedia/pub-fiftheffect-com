@@ -1,6 +1,8 @@
 import {Suspense} from 'react';
 import {defer, redirect} from '@shopify/remix-oxygen';
 import {Await, Link, useLoaderData} from '@remix-run/react';
+import {Button} from '~/components/Button';
+import {seoPayload} from '~/lib/seo.server';
 
 import {
   Image,
@@ -9,14 +11,8 @@ import {
   getSelectedProductOptions,
   CartForm,
 } from '@shopify/hydrogen';
-import {getVariantUrl} from '~/utils';
-
-/**
- * @type {MetaFunction<typeof loader>}
- */
-export const meta = ({data}) => {
-  return [{title: `Hydrogen | ${data?.product.title ?? ''}`}];
-};
+import {SellingPlanSelector} from '~/components/SellingPlanSelector';
+import {getVariantUrl} from '~/lib/variants';
 
 /**
  * @param {LoaderFunctionArgs}
@@ -37,6 +33,10 @@ export async function loader({params, request, context}) {
       !option.name.startsWith('fbclid'),
   );
 
+  // Get the selected selling plan id from the request url
+  const selectedSellingPlanId =
+    new URL(request.url).searchParams.get('selling_plan') ?? null;
+
   if (!handle) {
     throw new Error('Expected product handle to be defined');
   }
@@ -49,6 +49,8 @@ export async function loader({params, request, context}) {
   if (!product?.id) {
     throw new Response(null, {status: 404});
   }
+
+  const seo = seoPayload.product({product, url: request.url});
 
   const firstVariant = product.variants.nodes[0];
   const firstVariantIsDefault = Boolean(
@@ -67,6 +69,23 @@ export async function loader({params, request, context}) {
     }
   }
 
+  // Get the selected selling plan from the product
+  const selectedSellingPlan =
+    product.sellingPlanGroups.nodes?.[0]?.sellingPlans.nodes?.find(
+      (sellingPlan) => sellingPlan.id === selectedSellingPlanId,
+    ) ?? null;
+
+  /**
+   If the product includes selling plans but no selling plan is selected, we
+    redirect to the first selling plan, so that's is selected by default
+  **/
+  if (product.sellingPlanGroups.nodes?.length && !selectedSellingPlan) {
+    const firstSellingPlanId =
+      product.sellingPlanGroups.nodes[0].sellingPlans.nodes[0].id;
+    return redirect(
+      `/products/${product.handle}?selling_plan=${firstSellingPlanId}`,
+    );
+  }
   // In order to show which variants are available in the UI, we need to query
   // all of them. But there might be a *lot*, so instead separate the variants
   // into it's own separate query that is deferred. So there's a brief moment
@@ -76,7 +95,7 @@ export async function loader({params, request, context}) {
     variables: {handle},
   });
 
-  return defer({product, variants});
+  return defer({product, variants, selectedSellingPlan, seo});
 }
 
 /**
@@ -104,13 +123,14 @@ function redirectToFirstVariant({product, request}) {
 
 export default function Product() {
   /** @type {LoaderReturnData} */
-  const {product, variants} = useLoaderData();
+  const {product, variants, selectedSellingPlan} = useLoaderData();
   const {selectedVariant} = product;
   return (
     <div className="product">
       <ProductImage image={selectedVariant?.image} />
       <ProductMain
         selectedVariant={selectedVariant}
+        selectedSellingPlan={selectedSellingPlan}
         product={product}
         variants={variants}
       />
@@ -145,18 +165,28 @@ function ProductImage({image}) {
  *   variants: Promise<ProductVariantsQuery>;
  * }}
  */
-function ProductMain({selectedVariant, product, variants}) {
-  const {title, descriptionHtml} = product;
+function ProductMain({
+  selectedVariant,
+  selectedSellingPlan,
+  product,
+  variants,
+}) {
+  const {title, descriptionHtml, sellingPlanGroups} = product;
   return (
     <div className="product-main">
       <h1>{title}</h1>
-      <ProductPrice selectedVariant={selectedVariant} />
+      <ProductPrice
+        selectedVariant={selectedVariant}
+        selectedSellingPlan={selectedSellingPlan}
+      />
       <br />
       <Suspense
         fallback={
           <ProductForm
             product={product}
             selectedVariant={selectedVariant}
+            selectedSellingPlan={selectedSellingPlan}
+            sellingPlanGroups={sellingPlanGroups}
             variants={[]}
           />
         }
@@ -169,6 +199,8 @@ function ProductMain({selectedVariant, product, variants}) {
             <ProductForm
               product={product}
               selectedVariant={selectedVariant}
+              selectedSellingPlan={selectedSellingPlan}
+              sellingPlanGroups={sellingPlanGroups}
               variants={data.product?.variants.nodes || []}
             />
           )}
@@ -191,24 +223,94 @@ function ProductMain({selectedVariant, product, variants}) {
  *   selectedVariant: ProductFragment['selectedVariant'];
  * }}
  */
-function ProductPrice({selectedVariant}) {
+function ProductPrice({selectedVariant, selectedSellingPlan}) {
   return (
     <div className="product-price">
-      {selectedVariant?.compareAtPrice ? (
-        <>
-          <p>Sale</p>
-          <br />
-          <div className="product-price-on-sale">
-            {selectedVariant ? <Money data={selectedVariant.price} /> : null}
-            <s>
-              <Money data={selectedVariant.compareAtPrice} />
-            </s>
-          </div>
-        </>
+      {selectedSellingPlan ? (
+        <SellingPlanPrice
+          selectedSellingPlan={selectedSellingPlan}
+          selectedVariant={selectedVariant}
+        />
       ) : (
-        selectedVariant?.price && <Money data={selectedVariant?.price} />
+        <ProductVariantPrice selectedVariant={selectedVariant} />
       )}
     </div>
+  );
+}
+
+/*
+  Render the selected selling plan price is available
+*/
+function SellingPlanPrice({selectedSellingPlan, selectedVariant}) {
+  const sellingPlanPriceAdjustments = selectedSellingPlan?.priceAdjustments;
+
+  if (!sellingPlanPriceAdjustments?.length) {
+    return <Money data={selectedVariant.price} />;
+  }
+
+  const selectedVariantPrice = {
+    amount: parseFloat(selectedVariant.price.amount),
+    currencyCode: selectedVariant.price.currencyCode,
+  };
+
+  const sellingPlanPrice = sellingPlanPriceAdjustments.reduce(
+    (acc, adjustment) => {
+      switch (adjustment.adjustmentValue.__typename) {
+        case 'SellingPlanFixedAmountPriceAdjustment':
+          return {
+            amount:
+              acc.amount -
+              parseFloat(adjustment.adjustmentValue.adjustmentAmount.amount),
+            currencyCode: acc.currencyCode,
+          };
+        case 'SellingPlanFixedPriceAdjustment':
+          return {
+            amount: parseFloat(adjustment.adjustmentValue.price.amount),
+            currencyCode: acc.currencyCode,
+          };
+        case 'SellingPlanPercentagePriceAdjustment':
+          const discount =
+            (acc.amount * adjustment.adjustmentValue.adjustmentPercentage) /
+            100;
+          return {
+            amount: acc.amount - discount,
+            currencyCode: acc.currencyCode,
+          };
+        default:
+          return acc;
+      }
+    },
+    selectedVariantPrice,
+  );
+  return (
+    <div className="selling-plan-price">
+      <Money
+        data={{
+          amount: `${sellingPlanPrice.amount}`,
+          currencyCode: sellingPlanPrice.currencyCode,
+        }}
+      />
+    </div>
+  );
+}
+
+/**
+	Render the price of a product that does not have selling plans
+  **/
+function ProductVariantPrice({selectedVariant}) {
+  return selectedVariant?.compareAtPrice ? (
+    <>
+      <p>Sale</p>
+      <br />
+      <div className="product-price-on-sale">
+        {selectedVariant ? <Money data={selectedVariant.price} /> : null}
+        <s>
+          <Money data={selectedVariant.compareAtPrice} />
+        </s>
+      </div>
+    </>
+  ) : (
+    selectedVariant?.price && <Money data={selectedVariant?.price} />
   );
 }
 
@@ -219,9 +321,27 @@ function ProductPrice({selectedVariant}) {
  *   variants: Array<ProductVariantFragment>;
  * }}
  */
-function ProductForm({product, selectedVariant, variants}) {
+function ProductForm({
+  product,
+  selectedVariant,
+  selectedSellingPlan,
+  sellingPlanGroups,
+  variants,
+}) {
   return (
     <div className="product-form">
+      <SellingPlanSelector
+        sellingPlanGroups={sellingPlanGroups}
+        selectedSellingPlan={selectedSellingPlan}
+      >
+        {({sellingPlanGroup}) => (
+          <SellingPlanGroup
+            key={sellingPlanGroup.name}
+            sellingPlanGroup={sellingPlanGroup}
+          />
+        )}
+      </SellingPlanSelector>
+      <br />
       <VariantSelector
         handle={product.handle}
         options={product.options}
@@ -231,27 +351,66 @@ function ProductForm({product, selectedVariant, variants}) {
       </VariantSelector>
       <br />
       <AddToCartButton
-        disabled={!selectedVariant || !selectedVariant.availableForSale}
-        onClick={() => {
-          window.location.href = window.location.href + '#cart-aside';
-        }}
+        disabled={
+          !selectedVariant ||
+          !selectedVariant.availableForSale ||
+          (sellingPlanGroups?.nodes.length && !selectedSellingPlan)
+        }
+        // onClick={() => {
+        //   window.location.href = window.location.href + '#cart-aside';
+        // }}
         lines={
           selectedVariant
             ? [
                 {
                   merchandiseId: selectedVariant.id,
+                  sellingPlanId: selectedSellingPlan?.id,
                   quantity: 1,
                 },
               ]
             : []
         }
       >
-        {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
+        {sellingPlanGroups?.nodes.length
+          ? selectedSellingPlan
+            ? 'Subscribe'
+            : 'Select a subscription'
+          : selectedVariant?.availableForSale
+          ? 'Add to cart'
+          : 'Sold out'}
       </AddToCartButton>
     </div>
   );
 }
 
+function SellingPlanGroup({sellingPlanGroup}) {
+  return (
+    <div key={sellingPlanGroup.name}>
+      <p className="mb-2">
+        <strong>{sellingPlanGroup.name}:</strong>
+      </p>
+      {sellingPlanGroup.sellingPlans.nodes.map((sellingPlan) => {
+        return (
+          <Link
+            key={sellingPlan.id}
+            prefetch="intent"
+            to={sellingPlan.url}
+            className={`mr-2 inline-block cursor-pointer border border-b-[1.5px] p-4 py-1 leading-none transition-all duration-200 hover:no-underline
+					${sellingPlan.isSelected ? 'border-gray-500' : 'border-neutral-50'}`}
+            preventScrollReset
+            replace
+          >
+            <p>
+              {sellingPlan.options.map(
+                (option) => `${option.name} ${option.value}`,
+              )}
+            </p>
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
 /**
  * @param {{option: VariantOption}}
  */
@@ -298,18 +457,28 @@ function AddToCartButton({analytics, children, disabled, lines, onClick}) {
     <CartForm route="/cart" inputs={{lines}} action={CartForm.ACTIONS.LinesAdd}>
       {(fetcher) => (
         <>
+          <input type="hidden" name="redirectTo" value="checkout" />
           <input
             name="analytics"
             type="hidden"
             value={JSON.stringify(analytics)}
           />
-          <button
+          <Button
+            className="mt-7"
+            type="submit"
+            // onClick={onClick}
+            variant="primary"
+            disabled={disabled ?? fetcher.state !== 'idle'}
+          >
+            {children}
+          </Button>
+          {/* <button
             type="submit"
             onClick={onClick}
             disabled={disabled ?? fetcher.state !== 'idle'}
           >
             {children}
-          </button>
+          </button> */}
         </>
       )}
     </CartForm>
@@ -353,6 +522,71 @@ const PRODUCT_VARIANT_FRAGMENT = `#graphql
   }
 `;
 
+const SELLING_PLAN_FRAGMENT = `#graphql
+  fragment SellingPlanMoney on MoneyV2 {
+    amount
+    currencyCode
+  }
+  fragment SellingPlan on SellingPlan {
+    id
+    options {
+      name
+      value
+    }
+    priceAdjustments {
+      adjustmentValue {
+        ... on SellingPlanFixedAmountPriceAdjustment {
+          __typename
+          adjustmentAmount {
+            ... on MoneyV2 {
+               ...SellingPlanMoney
+            }
+          }
+        }
+        ... on SellingPlanFixedPriceAdjustment {
+          __typename
+          price {
+            ... on MoneyV2 {
+              ...SellingPlanMoney
+            }
+          }
+        }
+        ... on SellingPlanPercentagePriceAdjustment {
+          __typename
+          adjustmentPercentage
+        }
+      }
+      orderCount
+    }
+    recurringDeliveries
+    checkoutCharge {
+      type
+      value {
+        ... on MoneyV2 {
+          ...SellingPlanMoney
+        }
+        ... on SellingPlanCheckoutChargePercentageValue {
+          percentage
+        }
+      }
+    }
+ }
+`;
+const SELLING_PLAN_GROUP_FRAGMENT = `#graphql
+  fragment SellingPlanGroup on SellingPlanGroup {
+    name
+    options {
+      name
+      values
+    }
+    sellingPlans(first:10) {
+      nodes {
+        ...SellingPlan
+      }
+    }
+  }
+  ${SELLING_PLAN_FRAGMENT}
+`;
 const PRODUCT_FRAGMENT = `#graphql
   fragment Product on Product {
     id
@@ -365,7 +599,7 @@ const PRODUCT_FRAGMENT = `#graphql
       name
       values
     }
-    selectedVariant: variantBySelectedOptions(selectedOptions: $selectedOptions) {
+    selectedVariant: variantBySelectedOptions(selectedOptions: $selectedOptions, ignoreUnknownOptions: true, caseInsensitiveMatch: true) {
       ...ProductVariant
     }
     variants(first: 1) {
@@ -377,8 +611,14 @@ const PRODUCT_FRAGMENT = `#graphql
       description
       title
     }
+	sellingPlanGroups(first:10) {
+		nodes {
+		  ...SellingPlanGroup
+		}
+	  }
   }
   ${PRODUCT_VARIANT_FRAGMENT}
+  ${SELLING_PLAN_GROUP_FRAGMENT}
 `;
 
 const PRODUCT_QUERY = `#graphql

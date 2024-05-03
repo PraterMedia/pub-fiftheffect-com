@@ -1,9 +1,9 @@
-import {Link, NavLink} from '@remix-run/react';
-import {useState, useEffect, useRef} from 'react';
+import {Await, Link, NavLink} from '@remix-run/react';
+import {useState, useEffect, useRef, Suspense} from 'react';
 import clsx from 'clsx';
 import {IconUser, IconMenu, IconClose, IconLink} from './Icon';
 
-export function Header({menu, title, logo, isHome}) {
+export function Header({menu, title, logo, isHome, cart}) {
   const Logoelem = isHome ? `h1` : `div`;
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef(null);
@@ -23,7 +23,7 @@ export function Header({menu, title, logo, isHome}) {
 
   return (
     <header role="banner" className="sticky top-0 z-20 bg-white">
-      <div className="container relative flex flex-wrap items-center justify-between py-2 md:py-9">
+      <div className="container relative flex flex-wrap items-center py-2 md:py-9">
         <Logoelem className="max-w-[70%]">
           <Link
             className="text-2xl uppercase leading-none text-dark"
@@ -47,10 +47,11 @@ export function Header({menu, title, logo, isHome}) {
         <nav
           className={clsx(
             isOpen ? 'block' : 'hidden',
-            'absolute right-0 top-0 w-4/5 bg-white pt-[70px] shadow-header xs:w-1/2 md:static md:block md:w-auto md:bg-transparent md:pt-0 md:shadow-none',
+            'absolute right-0 top-0 w-4/5 bg-white pt-[70px] shadow-header xs:w-1/2 md:static md:ml-auto md:block md:w-auto md:bg-transparent md:pt-0 md:shadow-none',
           )}
           id="navbar-header"
           ref={ref}
+          role="navigation"
         >
           <ul className="items-center px-4 pb-9 text-xl md:flex md:gap-4 md:p-0 md:text-base">
             {(menu?.items || []).map((item) => (
@@ -97,21 +98,48 @@ export function Header({menu, title, logo, isHome}) {
             ))}
           </ul>
         </nav>
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          type="button"
-          className="z-1 relative p-3 text-dark focus:outline-none focus:ring-2 focus:ring-dark md:hidden"
-          aria-controls="navbar-header"
-          aria-expanded={isOpen}
-        >
-          <span className="sr-only">{isOpen ? 'Close menu' : 'Open menu'}</span>
-          {isOpen ? (
-            <IconClose viewBox="0 0 15 15" className="h-5 w-5" />
-          ) : (
-            <IconMenu viewBox="0 0 16 14" className="h-5 w-5" />
-          )}
-        </button>
+        <nav role="navigation" className="ml-auto flex gap-x-3 md:ml-0">
+          {cart && <CartToggle cart={cart} />}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            type="button"
+            className="z-1 relative p-3 text-dark focus:outline-none focus:ring-2 focus:ring-dark md:hidden"
+            aria-controls="navbar-header"
+            aria-expanded={isOpen}
+          >
+            <span className="sr-only">
+              {isOpen ? 'Close menu' : 'Open menu'}
+            </span>
+            {isOpen ? (
+              <IconClose viewBox="0 0 15 15" className="h-5 w-5" />
+            ) : (
+              <IconMenu viewBox="0 0 16 14" className="h-5 w-5" />
+            )}
+          </button>
+        </nav>
       </div>
     </header>
   );
+}
+
+/**
+ * @param {Pick<HeaderProps, 'cart'>}
+ */
+function CartToggle({cart}) {
+  return (
+    <Suspense fallback={<CartBadge count={0} />}>
+      <Await resolve={cart}>
+        {(cart) => {
+          if (!cart) return <CartBadge count={0} />;
+          return <CartBadge count={cart.totalQuantity || 0} />;
+        }}
+      </Await>
+    </Suspense>
+  );
+}
+/**
+ * @param {{count: number}}
+ */
+function CartBadge({count}) {
+  return <a href="#cart-aside">Cart {count}</a>;
 }
