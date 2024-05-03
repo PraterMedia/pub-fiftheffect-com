@@ -234,20 +234,6 @@ function ProductPrice({selectedVariant, selectedSellingPlan}) {
       ) : (
         <ProductVariantPrice selectedVariant={selectedVariant} />
       )}
-      {/* {selectedVariant?.compareAtPrice ? (
-        <>
-          <p>Sale</p>
-          <br />
-          <div className="product-price-on-sale">
-            {selectedVariant ? <Money data={selectedVariant.price} /> : null}
-            <s>
-              <Money data={selectedVariant.compareAtPrice} />
-            </s>
-          </div>
-        </>
-      ) : (
-        selectedVariant?.price && <Money data={selectedVariant?.price} />
-      )} */}
     </div>
   );
 }
@@ -370,9 +356,9 @@ function ProductForm({
           !selectedVariant.availableForSale ||
           (sellingPlanGroups?.nodes.length && !selectedSellingPlan)
         }
-        onClick={() => {
-          window.location.href = window.location.href + '#cart-aside';
-        }}
+        // onClick={() => {
+        //   window.location.href = window.location.href + '#cart-aside';
+        // }}
         lines={
           selectedVariant
             ? [
@@ -471,6 +457,7 @@ function AddToCartButton({analytics, children, disabled, lines, onClick}) {
     <CartForm route="/cart" inputs={{lines}} action={CartForm.ACTIONS.LinesAdd}>
       {(fetcher) => (
         <>
+          <input type="hidden" name="redirectTo" value="checkout" />
           <input
             name="analytics"
             type="hidden"
@@ -479,7 +466,7 @@ function AddToCartButton({analytics, children, disabled, lines, onClick}) {
           <Button
             className="mt-7"
             type="submit"
-            onClick={onClick}
+            // onClick={onClick}
             variant="primary"
             disabled={disabled ?? fetcher.state !== 'idle'}
           >

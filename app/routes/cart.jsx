@@ -66,9 +66,9 @@ export async function action({request, context}) {
   const {cart: cartResult, errors} = result;
 
   const redirectTo = formData.get('redirectTo') ?? null;
-  if (typeof redirectTo === 'string') {
+  if (redirectTo === 'checkout' && cartResult.checkoutUrl) {
     status = 303;
-    headers.set('Location', redirectTo);
+    headers.set('Location', cartResult.checkoutUrl);
   }
 
   headers.append('Set-Cookie', await context.session.commit());

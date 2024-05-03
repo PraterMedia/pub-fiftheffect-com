@@ -4,14 +4,8 @@ import {redirect} from '@shopify/remix-oxygen';
 /**
  * @param {LoaderFunctionArgs}
  */
-export async function loader({context}) {
-  await context.customerAccount.handleAuthStatus();
-
-  return redirect('/account', {
-    headers: {
-      'Set-Cookie': await context.session.commit(),
-    },
-  });
+export async function loader() {
+  return redirect('https://accounts.fiftheffect.com');
 }
 
 /** @typedef {import('@shopify/remix-oxygen').LoaderFunctionArgs} LoaderFunctionArgs */

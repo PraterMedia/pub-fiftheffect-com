@@ -111,6 +111,11 @@ export type CartApiQueryFragment = Pick<
   >;
 };
 
+export type CartApiMutationFragment = Pick<
+  StorefrontAPI.Cart,
+  'id' | 'totalQuantity' | 'checkoutUrl'
+>;
+
 export type LayoutMenusQueryVariables = StorefrontAPI.Exact<{
   headerMenuHandle: StorefrontAPI.Scalars['String']['input'];
   footerMenuHandle: StorefrontAPI.Scalars['String']['input'];

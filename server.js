@@ -5,15 +5,14 @@ import {
   cartSetIdDefault,
   createCartHandler,
   createStorefrontClient,
-  storefrontRedirect,
-  createCustomerAccountClient,
+  storefrontRedirect
 } from '@shopify/hydrogen';
 import {
   createRequestHandler,
   getStorefrontHeaders,
 } from '@shopify/remix-oxygen';
 import {AppSession} from '~/lib/session';
-import {CART_QUERY_FRAGMENT} from '~/lib/fragments';
+import {CART_QUERY_FRAGMENT, CART_MUTATE_FRAGMENT} from '~/lib/fragments';
 
 /**
  * Export a fetch handler in module format.
@@ -53,27 +52,16 @@ export default {
         storefrontHeaders: getStorefrontHeaders(request),
       });
 
-      /**
-       * Create a client for Customer Account API.
-       */
-      const customerAccount = createCustomerAccountClient({
-        waitUntil,
-        request,
-        session,
-        customerAccountId: env.PUBLIC_CUSTOMER_ACCOUNT_API_CLIENT_ID,
-        customerAccountUrl: env.PUBLIC_CUSTOMER_ACCOUNT_API_URL,
-      });
-
       /*
        * Create a cart handler that will be used to
        * create and update the cart in the session.
        */
       const cart = createCartHandler({
         storefront,
-        customerAccount,
         getCartId: cartGetIdDefault(request.headers),
         setCartId: cartSetIdDefault(),
         cartQueryFragment: CART_QUERY_FRAGMENT,
+		cartMutateFragment: CART_MUTATE_FRAGMENT
       });
 
       /**
@@ -86,7 +74,6 @@ export default {
         getLoadContext: () => ({
           session,
           storefront,
-          customerAccount,
           cart,
           env,
           waitUntil,

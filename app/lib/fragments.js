@@ -105,3 +105,11 @@ export const CART_QUERY_FRAGMENT = `#graphql
     }
   }
 `;
+
+export const CART_MUTATE_FRAGMENT = `#graphql
+fragment CartApiMutation on Cart {
+    id
+    totalQuantity
+    checkoutUrl
+  }
+`;

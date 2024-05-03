@@ -121,10 +121,10 @@ export const useRootLoaderData = () => {
 export async function loader({request, context}) {
   const layout = await getLayoutData(context);
   const seo = seoPayload.root({shop: layout.shop, url: request.url});
-  const cartPromise = context.cart.get();
+  //   const cartPromise = context.cart.get();
 
   return defer({
-	cart: cartPromise,
+    // cart: cartPromise,
     layout,
     analytics: {
       shopifySalesChannel: ShopifySalesChannel.hydrogen,
@@ -159,7 +159,7 @@ export default function App() {
       <body>
         <Layout
           key={`${locale.language}-${locale.country}`}
-		  cart={data.cart}
+          //cart={data.cart}
           layout={data.layout}
         >
           <Outlet />
