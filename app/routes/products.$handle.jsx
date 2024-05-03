@@ -472,13 +472,6 @@ function AddToCartButton({analytics, children, disabled, lines, onClick}) {
           >
             {children}
           </Button>
-          {/* <button
-            type="submit"
-            onClick={onClick}
-            disabled={disabled ?? fetcher.state !== 'idle'}
-          >
-            {children}
-          </button> */}
         </>
       )}
     </CartForm>
