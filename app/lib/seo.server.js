@@ -1,4 +1,4 @@
-import feSeoMedia from "../../public/images/5e-studios-empowers-store-for-success.jpg"
+import feSeoMedia from "../../public/images/empowers-store-for-success.jpg"
 function root({shop, url}) {
 	return {
 	  title: shop?.name,

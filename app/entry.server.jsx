@@ -20,6 +20,7 @@ export default async function handleRequest(
       'https://calendly.com',
       'https://js.driftt.com',
       'https://*.stripe.com',
+      'https://www.googletagmanager.com',
     ],
     imgSrc: [
       'self',
@@ -31,11 +32,11 @@ export default async function handleRequest(
   });
   header = header.replaceAll(
     'https://cdn.shopify.com',
-    'https://cdn.shopify.com https://*.stripe.com https://stripe.com https://fonts.gstatic.com https://fonts.googleapis.com https://formaloo.me https://js.driftt.com https://acsbapp.com',
+    'https://cdn.shopify.com https://*.stripe.com https://stripe.com https://fonts.gstatic.com https://fonts.googleapis.com https://formaloo.me https://js.driftt.com https://acsbapp.com https://www.googletagmanager.com https://www.clarity.ms',
   );
   header = header.replaceAll(
     'https://monorail-edge.shopifysvc.com',
-    'https://monorail-edge.shopifysvc.com https://api.formaloo.me https://*.acsbapp.com https://acsbapp.com',
+    'https://monorail-edge.shopifysvc.com https://api.formaloo.me https://*.acsbapp.com https://acsbapp.com https://www.googletagmanager.com https://*.clarity.ms https://www.google-analytics.com',
   );
   const body = await renderToReadableStream(
     <NonceProvider>
