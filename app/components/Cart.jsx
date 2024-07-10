@@ -1,22 +1,26 @@
 import {CartForm, Image, Money} from '@shopify/hydrogen';
 import {Link} from '@remix-run/react';
 import {useVariantUrl} from '~/lib/variants';
+import {IconMinus, IconPlus, IconTrash} from './Icon';
+import clsx from 'clsx';
 
 /**
  * @param {CartMainProps}
  */
 export function CartMain({layout, cart}) {
   const linesCount = Boolean(cart?.lines?.nodes?.length || 0);
-  const withDiscount =
-    cart &&
-    Boolean(cart?.discountCodes?.filter((code) => code.applicable)?.length);
-  const className = `cart-main ${withDiscount ? 'with-discount' : ''}`;
+  const cartHasItems = !!cart && cart.totalQuantity > 0;
 
-  return (
-    <div className={className}>
-      <CartEmpty hidden={linesCount} layout={layout} />
+  return cartHasItems ? (
+    <>
       <CartDetails cart={cart} layout={layout} />
-    </div>
+      <CartSummary layout={layout}>
+        {/* <CartDiscounts discountCodes={cart.discountCodes} /> */}
+        <CartCheckoutActions checkoutUrl={cart.checkoutUrl} cost={cart.cost} />
+      </CartSummary>
+    </>
+  ) : (
+    <CartEmpty hidden={linesCount} layout={layout} />
   );
 }
 
@@ -24,18 +28,10 @@ export function CartMain({layout, cart}) {
  * @param {CartMainProps}
  */
 function CartDetails({layout, cart}) {
-  const cartHasItems = !!cart && cart.totalQuantity > 0;
-
   return (
-    <div className="cart-details">
+    <main className="flex-1 overflow-auto px-3">
       <CartLines lines={cart?.lines} layout={layout} />
-      {cartHasItems && (
-        <CartSummary cost={cart.cost} layout={layout}>
-          <CartDiscounts discountCodes={cart.discountCodes} />
-          <CartCheckoutActions checkoutUrl={cart.checkoutUrl} />
-        </CartSummary>
-      )}
-    </div>
+    </main>
   );
 }
 
@@ -49,12 +45,36 @@ function CartLines({lines, layout}) {
   if (!lines) return null;
 
   return (
-    <div aria-labelledby="cart-lines">
-      <ul>
-        {lines.nodes.map((line) => (
-          <CartLineItem key={line.id} line={line} layout={layout} />
-        ))}
-      </ul>
+    <div aria-labelledby="cart-lines" className="flex flex-col">
+      <table>
+        <thead role="rowgroup">
+          <tr role="row">
+            <th id="CartDrawer-ColumnProductImage" role="columnheader">
+              <span className="sr-only">Product image</span>
+            </th>
+            <th id="CartDrawer-ColumnProduct" scope="col" role="columnheader">
+              <span className="sr-only">Product</span>
+            </th>
+            <th id="CartDrawer-ColumnRemove" scope="col" role="columnheader">
+              <span className="sr-only">Remove</span>
+            </th>
+            <th id="CartDrawer-ColumnQuantity" role="columnheader">
+              <span className="sr-only">Quantity and Total</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody role="rowgroup">
+          {lines.nodes.map((line, index) => (
+            <CartLineItem
+              key={line.id}
+              line={line}
+              layout={layout}
+              index={index}
+              last={index === lines.nodes.length - 1}
+            />
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
@@ -65,28 +85,60 @@ function CartLines({lines, layout}) {
  *   line: CartLine;
  * }}
  */
-function CartLineItem({layout, line}) {
-  const {id, merchandise, sellingPlanAllocation} = line;
+function CartLineItem({layout, line, index, last}) {
+  const {id, merchandise, lineId, sellingPlanAllocation} = line;
   const {product, title, image, selectedOptions} = merchandise;
   const lineItemUrl = useVariantUrl(product.handle, selectedOptions);
 
   return (
-    <li key={id} className="cart-line">
-      {image && (
-        <Image
-          alt={title}
-          aspectRatio="1/1"
-          data={image}
-          height={100}
-          loading="lazy"
-          width={100}
-        />
+    <tr
+      key={id}
+      id={`CartDrawer-Item-${index}`}
+      className={clsx(
+        !last && 'border-b border-borders-gray pb-5',
+        'grid grid-cols-[repeat(4,1fr)] grid-rows-[repeat(2,auto)] gap-2',
       )}
-
-      <div>
+      role="row"
+    >
+      <td
+        className="relative row-start-1 row-end-3 w-20 pt-5 md:w-[100px]"
+        role="cell"
+        headers="CartDrawer-ColumnProductImage"
+      >
         <Link
           prefetch="intent"
           to={lineItemUrl}
+          aria-hidden="true"
+          tabIndex="-1"
+          className="absolute left-0 top-0 h-full w-full"
+          onClick={() => {
+            if (layout === 'aside') {
+              // close the drawer
+              window.location.href = lineItemUrl;
+            }
+          }}
+        ></Link>
+        {image && (
+          <Image
+            alt={title}
+            //   aspectRatio="1/1"
+            data={image}
+            height={100}
+            loading="lazy"
+            width={100}
+            className="h-auto max-w-full"
+          />
+        )}
+      </td>
+      <td
+        className="col-start-2 col-end-4 pl-3 pt-5"
+        role="cell"
+        headers="CartDrawer-ColumnProduct"
+      >
+        <Link
+          prefetch="intent"
+          to={lineItemUrl}
+          className="block font-bold leading-tight text-dark"
           onClick={() => {
             if (layout === 'aside') {
               // close the drawer
@@ -94,25 +146,58 @@ function CartLineItem({layout, line}) {
             }
           }}
         >
-          <p>
-            <strong>{product.title}</strong>
-          </p>
+          {product.title}
         </Link>
-        <CartLinePrice line={line} as="span" />
         <ul>
           {sellingPlanAllocation && (
-            <li key={sellingPlanAllocation.sellingPlan.name}>
-              <small>{sellingPlanAllocation.sellingPlan.name}</small>
-            </li>
-          )}
-          {selectedOptions.map((option) => (
-            <li key={option.name}>
-              <small>
-                {option.name}: {option.value}
+            <li key={sellingPlanAllocation.sellingPlan.name} className="mt-1">
+              <small className="text-xs leading-snug text-gray">
+                {sellingPlanAllocation.sellingPlan.name}
               </small>
             </li>
-          ))}
+          )}
+          {selectedOptions.map((option) =>
+            option.name == 'Title' && option.value == 'Default Title' ? (
+              ''
+            ) : (
+              <li key={option.name} className="mt-1">
+                <small className="text-sm font-medium leading-snug text-dark">
+                  {option.name}: {option.value}
+                </small>
+              </li>
+            ),
+          )}
         </ul>
+      </td>
+      <td
+        className="pt-5 text-right"
+        role="cell"
+        headers="CartDrawer-ColumnRemove"
+      >
+        <div className="hidden md:block">
+          <CartLineRemoveButton lineIds={[lineId]} />
+        </div>
+      </td>
+
+      <td
+        className="col-start-2 col-end-5 pl-3"
+        role="cell"
+        headers="CartDrawer-ColumnQuantity"
+      >
+        <div className="flex flex-wrap items-end justify-between gap-2">
+          <CartLineQuantity line={line} />
+          <div className="ml-auto pb-[.15rem] md:hidden">
+            <CartLineRemoveButton lineIds={[lineId]} />
+          </div>
+          <CartLinePrice line={line} />
+        </div>
+      </td>
+    </tr>
+  );
+
+  return (
+    <li key={id} className="cart-line">
+      <div>
         <CartLineQuantity line={line} />
       </div>
     </li>
@@ -122,13 +207,21 @@ function CartLineItem({layout, line}) {
 /**
  * @param {{checkoutUrl: string}}
  */
-function CartCheckoutActions({checkoutUrl}) {
+function CartCheckoutActions({checkoutUrl, cost}) {
   if (!checkoutUrl) return null;
 
   return (
     <div>
       <a href={checkoutUrl} target="_self">
-        <p>Continue to Checkout &rarr;</p>
+        Continue to Checkout
+        {cost?.subtotalAmount?.amount ? (
+          <>
+            {' '}
+            • <Money data={cost?.subtotalAmount} as="span" />{' '}
+          </>
+        ) : (
+          ''
+        )}
       </a>
       <br />
     </div>
@@ -142,23 +235,12 @@ function CartCheckoutActions({checkoutUrl}) {
  *   layout: CartMainProps['layout'];
  * }}
  */
-export function CartSummary({cost, layout, children = null}) {
+export function CartSummary({layout, children = null}) {
   const className =
     layout === 'page' ? 'cart-summary-page' : 'cart-summary-aside';
 
   return (
     <div aria-labelledby="cart-summary" className={className}>
-      <h4>Totals</h4>
-      <dl className="cart-subtotal">
-        <dt>Subtotal</dt>
-        <dd>
-          {cost?.subtotalAmount?.amount ? (
-            <Money data={cost?.subtotalAmount} />
-          ) : (
-            '-'
-          )}
-        </dd>
-      </dl>
       {children}
     </div>
   );
@@ -167,14 +249,21 @@ export function CartSummary({cost, layout, children = null}) {
 /**
  * @param {{lineIds: string[]}}
  */
-function CartLineRemoveButton({lineIds}) {
+function CartLineRemoveButton({lineIds, className}) {
   return (
     <CartForm
       route="/cart"
       action={CartForm.ACTIONS.LinesRemove}
       inputs={{lineIds}}
+      className={className}
     >
-      <button type="submit">Remove</button>
+      <button
+        type="submit"
+        className="text-gray transition-colors duration-300 hover:text-dark"
+      >
+        <span className="sr-only">Remove</span>
+        <IconTrash className="h-5 w-5" />
+      </button>
     </CartForm>
   );
 }
@@ -189,30 +278,36 @@ function CartLineQuantity({line}) {
   const nextQuantity = Number((quantity + 1).toFixed(0));
 
   return (
-    <div className="cart-line-quantity">
-      <small>Quantity: {quantity} &nbsp;&nbsp;</small>
-      <CartLineUpdateButton lines={[{id: lineId, quantity: prevQuantity}]}>
-        <button
-          aria-label="Decrease quantity"
-          disabled={quantity <= 1}
-          name="decrease-quantity"
-          value={prevQuantity}
-        >
-          <span>&#8722; </span>
-        </button>
-      </CartLineUpdateButton>
-      &nbsp;
-      <CartLineUpdateButton lines={[{id: lineId, quantity: nextQuantity}]}>
-        <button
-          aria-label="Increase quantity"
-          name="increase-quantity"
-          value={nextQuantity}
-        >
-          <span>&#43;</span>
-        </button>
-      </CartLineUpdateButton>
-      &nbsp;
-      <CartLineRemoveButton lineIds={[lineId]} />
+    <div>
+      <strong className="mb-1 block text-sm font-medium text-dark">
+        Quantity:
+      </strong>
+      <div className="flex items-center rounded-[2px] border border-borders-gray">
+        <CartLineUpdateButton lines={[{id: lineId, quantity: prevQuantity}]}>
+          <button
+            aria-label="Decrease quantity"
+            disabled={quantity <= 1}
+            name="decrease-quantity"
+            className="flex h-8 w-9 items-center justify-center text-gray transition-colors duration-300 hover:text-dark disabled:text-borders-gray"
+            value={prevQuantity}
+          >
+            <IconMinus className="h-[2px] w-[13px]" />
+          </button>
+        </CartLineUpdateButton>
+        <span className="pointer-events-none flex h-8 w-12 items-center justify-center border-l border-r border-borders-gray text-gray">
+          {quantity}
+        </span>
+        <CartLineUpdateButton lines={[{id: lineId, quantity: nextQuantity}]}>
+          <button
+            aria-label="Increase quantity"
+            name="increase-quantity"
+            className="flex h-8 w-9 items-center justify-center text-gray transition-colors duration-300 hover:text-dark disabled:text-borders-gray"
+            value={nextQuantity}
+          >
+            <IconPlus className="h-[14px] w-[15px]" />
+          </button>
+        </CartLineUpdateButton>
+      </div>
     </div>
   );
 }
@@ -237,9 +332,12 @@ function CartLinePrice({line, priceType = 'regular', ...passthroughProps}) {
   }
 
   return (
-    <div>
-      <Money withoutTrailingZeros {...passthroughProps} data={moneyV2} />
-    </div>
+    <Money
+      withoutTrailingZeros
+      {...passthroughProps}
+      data={moneyV2}
+      className="w-full pb-[.35rem] font-medium text-dark md:w-auto"
+    />
   );
 }
 

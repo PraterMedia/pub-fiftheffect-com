@@ -1,7 +1,7 @@
 import {Await, Link, NavLink} from '@remix-run/react';
 import {useState, useEffect, useRef, Suspense} from 'react';
 import clsx from 'clsx';
-import {IconUser, IconMenu, IconClose, IconLink} from './Icon';
+import {IconUser, IconMenu, IconClose, IconLink, IconArrow} from './Icon';
 
 export function Header({menu, title, logo, isHome, cart}) {
   const Logoelem = isHome ? `h1` : `div`;
@@ -23,8 +23,8 @@ export function Header({menu, title, logo, isHome, cart}) {
 
   return (
     <header role="banner" className="sticky top-0 z-20 bg-white">
-      <div className="container relative flex flex-wrap items-center py-2 md:py-9">
-        <Logoelem className="max-w-[70%]">
+      <div className="container relative flex flex-wrap items-center py-2 md:py-[.875rem]">
+        <Logoelem className="max-w-[70%] md:max-w-[150px] lg:max-w-[70%]">
           <Link
             className="text-2xl uppercase leading-none text-dark"
             to="/"
@@ -53,11 +53,15 @@ export function Header({menu, title, logo, isHome, cart}) {
           ref={ref}
           role="navigation"
         >
-          <ul className="items-center px-4 pb-9 text-xl md:flex md:gap-4 md:p-0 md:text-base">
+          <ul className="flex flex-col px-4 pb-6 md:flex-row md:items-center md:gap-3 md:p-0 lg:gap-8">
             {(menu?.items || []).map((item) => (
               <li
                 key={item.id}
-                className="border-b border-b-dark-gray px-2 py-3 md:border-0 md:p-0"
+                className={clsx(
+                  'border-b border-b-dark-gray px-2 py-3 md:border-0 md:p-0',
+                  item.title.toLowerCase() === 'book a call' &&
+                    'order-last border-b-0 px-0 pb-0 pt-6 md:order-none',
+                )}
               >
                 <NavLink
                   to={item.to}
@@ -66,28 +70,47 @@ export function Header({menu, title, logo, isHome, cart}) {
                   onClick={() => setIsOpen(false)}
                   className={({isActive}) =>
                     clsx(
-                      'border-b py-1 text-dark transition duration-300 md:hover:text-dark',
-                      item.title.toLowerCase() === 'client login'
-                        ? 'hover:opacity-70 md:block md:border-l md:border-l-light-gray md:pl-4'
-                        : 'hover:border-b-primary-accent',
-                      isActive
-                        ? 'border-b-primary-accent'
-                        : 'border-b-transparent',
+                      'text-dark transition duration-300',
+                      item.title.toLowerCase() === 'client login' ||
+                        item.title.toLowerCase() === 'book a call'
+                        ? 'py-1 md:hover:text-dark lg:rounded lg:border lg:border-solid lg:px-7 lg:pb-[13px] lg:pt-3 lg:font-medium lg:leading-none lg:hover:border-dark lg:hover:bg-dark lg:hover:text-white'
+                        : 'border-b py-1 md:hover:text-dark',
+                      item.title.toLowerCase() === 'book a call' &&
+                        'block rounded border border-solid border-secondary-accent bg-secondary-accent px-2 py-3 font-medium hover:bg-dark md:inline md:py-2 lg:ml-3 lg:border-secondary-accent',
+                      item.title.toLowerCase() === 'client login' &&
+                        'border-b border-b-transparent md:rounded md:border md:border-solid md:border-dark md:bg-white md:px-2 md:py-2 md:font-medium md:hover:bg-dark lg:-ml-4 lg:border-dark lg:bg-white',
+                      item.title.toLowerCase() !== 'client login' &&
+                        item.title.toLowerCase() !== 'book a call'
+                        ? isActive
+                          ? 'border-b-primary-accent'
+                          : 'border-b-transparent hover:border-b-primary-accent'
+                        : '',
                     )
                   }
                 >
-                  {item.title.toLowerCase() === 'client login' ? (
+                  {item.title.toLowerCase() === 'client login' ||
+                  item.title.toLowerCase() === 'book a call' ? (
                     <>
-                      <IconUser
-                        viewBox="0 0 16 16"
-                        className="hidden h-4 w-4 md:block"
-                      />
-                      <span className="relative pr-3 md:hidden">
+                      <span
+                        className={clsx(
+                          'relative inline-flex items-center gap-1',
+                          item.title.toLowerCase() === 'client login'
+                            ? 'pr-3 md:pr-0'
+                            : '',
+                        )}
+                      >
                         {item.title}
-                        <IconLink
-                          viewBox="0 0 8 8"
-                          className="absolute right-0 top-0 h-2 w-2"
-                        />
+                        {item.title.toLowerCase() === 'client login' ? (
+                          <IconLink
+                            viewBox="0 0 8 8"
+                            className="absolute right-0 top-0 h-2 w-2 md:hidden"
+                          />
+                        ) : (
+                          <IconArrow
+                            viewBox="0 0 19 12"
+                            className="h-5 w-5 md:hidden"
+                          />
+                        )}
                       </span>
                     </>
                   ) : (

@@ -21,6 +21,7 @@ module.exports = {
 				"secondary-accent": "var(--clr-secondary-accent)",
 				"tertiary-accent": "var(--clr-tertiary-accent)",
 				"borders": "var(--clr-borders)",
+				"borders-gray": "var(--clr-borders-gray)",
 				"gray": "var(--clr-gray)",
 				"light-gray": "var(--clr-light-gray)",
 				"dark-gray": "var(--clr-dark-gray)",
