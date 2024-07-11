@@ -57,9 +57,10 @@ export function Header({menu, title, logo, isHome, cart}) {
               <li
                 key={item.id}
                 className={clsx(
-                  'border-b border-b-dark-gray px-2 py-3 md:border-0 md:p-0',
-                  item.title.toLowerCase() === 'book a call' &&
-                    'order-last border-b-0 px-0 pb-0 pt-6 md:order-none',
+                  'border-b border-b-dark-gray md:border-0 md:p-0',
+                  item.title.toLowerCase() === 'book a call'
+                    ? 'order-last border-b-0 px-0 pb-0 pt-6 md:order-none'
+                    : 'px-2 py-3',
                 )}
               >
                 <NavLink
