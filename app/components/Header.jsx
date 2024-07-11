@@ -43,7 +43,6 @@ export function Header({menu, title, logo, isHome, cart}) {
             )}
           </Link>
         </Logoelem>
-
         <nav
           className={clsx(
             isOpen ? 'block' : 'hidden',
