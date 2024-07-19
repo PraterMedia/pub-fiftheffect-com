@@ -36,7 +36,6 @@ export default function Page() {
   const {page} = useLoaderData();
   //   const nonce = useNonce();
 
-  //   console.log(nonce);
   // Render the page content from Builder.io
   return <Content model="landing-page" apiKey={apiKey} content={page} />;
 }
