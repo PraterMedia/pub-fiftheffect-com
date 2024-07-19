@@ -3,6 +3,7 @@
 	"private": true,
 	"sideEffects": false,
 	"version": "1.0.1",
+	"type": "commonjs",
 	"scripts": {
 		"build": "shopify hydrogen build",
 		"dev": "shopify hydrogen dev --worker --codegen",
@@ -12,6 +13,7 @@
 	},
 	"prettier": "@shopify/prettier-config",
 	"dependencies": {
+		"@builder.io/sdk-react": "^2.0.0",
 		"@lottiefiles/lottie-player": "^2.0.3",
 		"@remix-run/react": "^2.6.0",
 		"@remix-run/server-runtime": "^2.6.0",

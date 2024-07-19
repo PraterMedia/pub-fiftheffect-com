@@ -21,5 +21,15 @@ module.exports = {
 	  v3_relativeSplatpath: true,
 	  v3_throwAbortReason: true,
 	},
+	// browserNodeBuiltinsPolyfill: {
+	// 	modules: {
+	// 	  vm: true,
+	// 	  fs: true,
+	// 	  buffer: true,
+	// 	  "stream/web": true,
+	// 	  worker_threads: true,
+	// 	  process: true
+	// 	},
+	//   },
   };
   
