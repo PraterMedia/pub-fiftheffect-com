@@ -13,6 +13,9 @@
 	},
 	"prettier": "@shopify/prettier-config",
 	"dependencies": {
+		"@builder.io/dev-tools": "^1.0.19",
+		"@builder.io/react": "^4.0.0",
+		"@builder.io/sdk": "^2.2.6",
 		"@builder.io/sdk-react": "^2.0.0",
 		"@lottiefiles/lottie-player": "^2.0.3",
 		"@remix-run/react": "^2.6.0",
