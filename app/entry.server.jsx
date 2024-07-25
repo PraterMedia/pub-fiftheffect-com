@@ -35,7 +35,7 @@ export default async function handleRequest(
   });
   header = header.replaceAll(
     'https://cdn.shopify.com',
-    'https://cdn.shopify.com https://*.builder.io https://*.stripe.com https://stripe.com https://fonts.gstatic.com https://fonts.googleapis.com https://formaloo.me https://js.driftt.com https://acsbapp.com https://www.googletagmanager.com https://www.clarity.ms',
+    'https://cdn.shopify.com https://*.builder.io https://*.stripe.com https://stripe.com https://fonts.gstatic.com https://fonts.googleapis.com https://formaloo.me https://js.driftt.com https://acsbapp.com https://www.googletagmanager.com https://*.clarity.ms https://www.clarity.ms',
   );
   header = header.replaceAll(
     'https://monorail-edge.shopifysvc.com',
