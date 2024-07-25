@@ -22,7 +22,7 @@ import {Layout} from './components/Layout';
 import {ErrorLayout} from './components/ErrorLayout';
 import {NotFound} from './components/NotFound';
 import {GenericError} from './components/GenericError';
-import {DriftChat, Accessibe} from './components/ExternalScripts';
+import {DriftChat, Accessibe, Gtm} from './components/ExternalScripts';
 
 import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
 import {useAnalytics} from './hooks/useAnalytics';
@@ -155,6 +155,7 @@ export default function App() {
         <Links />
         <DriftChat />
         <Accessibe />
+        <Gtm />
       </head>
       <body>
         <Layout

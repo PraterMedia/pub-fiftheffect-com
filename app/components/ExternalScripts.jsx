@@ -1,5 +1,20 @@
 import {useEffect} from 'react';
 
+export const Gtm = () => {
+  let loaded = false;
+  useEffect(() => {
+    if (loaded) return;
+    loaded = true;
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = '/gtm.js';
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+};
+
 export const DriftChat = () => {
   let loaded = false;
   useEffect(() => {
